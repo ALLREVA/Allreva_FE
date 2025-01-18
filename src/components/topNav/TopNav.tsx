@@ -24,7 +24,7 @@ const TopNav = () => {
     },
     concertHall: {
       name: '공연장 정보',
-      path: '/',
+      path: '/concert-halls',
     },
   };
   return (

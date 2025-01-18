@@ -48,6 +48,7 @@ export const endPoint = {
   GET_CONCERT_DETAIL: (concertId: number) => `/concerts/${concertId}`,
 
   // Concert Hall API
+  GET_CONCERT_HALL_LIST: '/concert-halls/list',
   GET_CONCERT_HALL: (hallCode: string) => `/concert-halls/${hallCode}`,
 
   // Search API

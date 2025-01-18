@@ -7,6 +7,7 @@ import { FullLayout, TitleHeaderLayout } from 'layout';
 import { AuthHeaderLayout, AuthTitleHeaderLayout, PublicOnlyLayout } from 'layout/ProtectedRoutes';
 import SearchLayout from 'layout/SearchLayout';
 import Callback from 'pages/callback/Callback';
+import ConcertHallsList from 'pages/concertHallsList/ConcertHallsList';
 import Search from 'pages/search/Search';
 import SearchMoreConcerts from 'pages/searchMore/SearchMoreConcerts';
 import SearchMoreRents from 'pages/searchMore/SearchMoreRents';
@@ -53,6 +54,7 @@ export const router = createBrowserRouter([
           { path: '/concerts', element: <Concert /> },
           { path: '/bus-rental', element: <BusRental /> },
           { path: '/surveys', element: <Surveys /> },
+          { path: '/concert-halls', element: <ConcertHallsList /> },
         ],
       },
       {
