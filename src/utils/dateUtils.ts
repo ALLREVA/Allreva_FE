@@ -79,3 +79,17 @@ export const formatDotDate = (dateString: string) => {
 export const formatFromNowDate = (date: string) => {
   return dayjs(date).fromNow();
 };
+
+// custom date
+export const formatCustomTime = (dateString: string) => {
+  const today = dayjs();
+  const date = dayjs(dateString);
+  const diffDays = today.diff(date, 'd', true);
+
+  if (today.get('y') !== date.get('y')) return `${date.format('YYYY.MM.DD')}`;
+  if (diffDays <= 0) return `${date.format('HH:mm')}`;
+  if (diffDays <= 1) return '어제';
+  if (diffDays <= 2) return '그저께';
+
+  return `${date.get('M') + 1}월 ${date.get('D')}일`;
+};

@@ -42,6 +42,8 @@ const CreateSeatReview = lazy(
   () => import('pages/createConcertHallReview/CreateConcertHallReview')
 );
 
+const Chat = lazy(() => import('pages/chat/Chat'));
+
 const routes = [
   {
     element: (
@@ -128,7 +130,10 @@ const routes = [
 
       {
         element: <AuthHeaderLayout />,
-        children: [{ path: '/mypage', element: <MyPage /> }],
+        children: [
+          { path: '/mypage', element: <MyPage /> },
+          { path: '/chat', element: <Chat /> },
+        ],
       },
 
       {
