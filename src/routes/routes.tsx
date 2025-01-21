@@ -43,6 +43,7 @@ const CreateSeatReview = lazy(
 );
 
 const Chat = lazy(() => import('pages/chat/Chat'));
+const JoinChat = lazy(() => import('pages/joinChat/JoinChat'));
 
 const routes = [
   {
@@ -236,6 +237,7 @@ const routes = [
             element: <CreateSeatReview isFromMypage type="edit" />,
             handle: { title: '좌석 리뷰 수정' },
           },
+          { path: '/chat/:id/join', element: <JoinChat />, handle: { title: '채팅 참여' } },
         ],
       },
     ],
