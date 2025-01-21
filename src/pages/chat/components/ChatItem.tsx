@@ -122,7 +122,11 @@ const ChatItem = ({
   const chatCount = lastChatNum - readChatNum;
 
   const handleChatClick = () => {
-    navigate(`/chat/${id}`);
+    if (members) {
+      navigate(`/chat/group/${id}`, { state: { title, members } });
+    } else {
+      navigate(`/chat/private/${id}`, { state: { title, members } });
+    }
   };
 
   return (

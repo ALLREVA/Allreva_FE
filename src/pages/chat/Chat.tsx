@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+
 import ChatItem from './components/ChatItem';
 
 const ContentContainer = styled.div`
