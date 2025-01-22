@@ -4,6 +4,10 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import { BodyMediumText, CaptionText } from 'styles/Typography';
 
+interface ChatRoomHeaderProps {
+  onMoreClick: () => void;
+}
+
 const ChatHeaderContainer = styled.div`
   display: grid;
   grid-template-columns: 5.6rem 1fr 5.6rem;
@@ -59,7 +63,7 @@ const ActionButtonWrapper = styled.div`
   gap: 0.8rem;
 `;
 
-const ChatRoomHeader = () => {
+const ChatRoomHeader = ({ onMoreClick }: ChatRoomHeaderProps) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { title, members } = location.state || {};
@@ -77,7 +81,7 @@ const ChatRoomHeader = () => {
         <ActionButton>
           <TbShare2 size={24} />
         </ActionButton>
-        <ActionButton>
+        <ActionButton onClick={onMoreClick}>
           <TbDotsVertical size={24} />
         </ActionButton>
       </ActionButtonWrapper>
