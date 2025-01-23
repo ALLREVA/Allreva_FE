@@ -13,10 +13,11 @@ interface Member {
   };
 }
 
-interface MemberListProps {
+export interface MemberListProps {
   me: Member;
   manager?: Member;
-  participants: Member[];
+  participants?: Member[];
+  otherMember?: Member;
 }
 
 const MemberListContainer = styled.div`
@@ -105,7 +106,7 @@ const PrivateChatButton = styled.button`
   }
 `;
 
-const MemberList = ({ me, manager, participants }: MemberListProps) => {
+const MemberList = ({ me, manager, participants, otherMember }: MemberListProps) => {
   const { pathname } = useLocation();
 
   const isGroupChat = pathname.startsWith('/chat/group/');
@@ -117,7 +118,7 @@ const MemberList = ({ me, manager, participants }: MemberListProps) => {
           <FaUserGroup size={16} />
           <ChipText>참여 멤버</ChipText>
         </MemberListTitle>
-        <SmallText>{participants.length}명 참여중</SmallText>
+        <SmallText>{isGroupChat ? participants?.length : '2'}명 참여중</SmallText>
       </MemberListTop>
       <MemberListWrapper>
         {manager && (
@@ -152,32 +153,43 @@ const MemberList = ({ me, manager, participants }: MemberListProps) => {
             </MemberProfile>
           </MemberItem>
         )}
-        {participants
-          .filter(
-            (participant) =>
-              participant.memberId !== manager?.memberId && participant.memberId !== me.memberId
-          )
-          .map((member) => {
-            return (
-              <MemberItem key={member.memberId}>
-                <MemberProfile>
-                  <ProfileImgContainer>
-                    <ProfileImg alt={member.nickname} src={member.profileImage.url} />
-                  </ProfileImgContainer>
-                  <CaptionText>
-                    {member.nickname}
-                    {member.memberId === me.memberId && `(나)`}
-                  </CaptionText>
-                </MemberProfile>
-                {manager?.memberId === me.memberId && isGroupChat && (
-                  <PrivateChatButton>
-                    <TbMessageCircle size={14} />
-                    <SmallText>1:1</SmallText>
-                  </PrivateChatButton>
-                )}
-              </MemberItem>
-            );
-          })}
+        {participants &&
+          participants
+            .filter(
+              (participant) =>
+                participant.memberId !== manager?.memberId && participant.memberId !== me.memberId
+            )
+            .map((member) => {
+              return (
+                <MemberItem key={member.memberId}>
+                  <MemberProfile>
+                    <ProfileImgContainer>
+                      <ProfileImg alt={member.nickname} src={member.profileImage.url} />
+                    </ProfileImgContainer>
+                    <CaptionText>
+                      {member.nickname}
+                      {member.memberId === me.memberId && `(나)`}
+                    </CaptionText>
+                  </MemberProfile>
+                  {manager?.memberId === me.memberId && isGroupChat && (
+                    <PrivateChatButton>
+                      <TbMessageCircle size={14} />
+                      <SmallText>1:1</SmallText>
+                    </PrivateChatButton>
+                  )}
+                </MemberItem>
+              );
+            })}
+        {otherMember && (
+          <MemberItem key={otherMember.memberId}>
+            <MemberProfile>
+              <ProfileImgContainer>
+                <ProfileImg alt={otherMember.nickname} src={otherMember.profileImage.url} />
+              </ProfileImgContainer>
+              <CaptionText>{otherMember.nickname}</CaptionText>
+            </MemberProfile>
+          </MemberItem>
+        )}
       </MemberListWrapper>
     </MemberListContainer>
   );

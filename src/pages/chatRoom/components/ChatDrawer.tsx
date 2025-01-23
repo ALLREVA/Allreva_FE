@@ -5,11 +5,21 @@ import { TbChevronLeft, TbSettings } from 'react-icons/tb';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import ExitDialog from './ExitDialog';
+import type { MemberListProps } from './MemberList';
 import MemberList from './MemberList';
 
 import { TOAST_MESSAGES } from 'constants/toastMessage';
 import { useModalStore, useToastStore } from 'stores';
 import { BodyMediumText, CaptionText } from 'styles/Typography';
+
+// 추후 삭제
+interface DummyData extends MemberListProps {
+  title: string;
+  thumbnail: {
+    url: string;
+  };
+  description: string;
+}
 
 interface ChatDrawerProps {
   toggleDrawer: () => void;
@@ -55,10 +65,8 @@ const ContentContainer = styled.div`
   align-items: center;
   flex-grow: 1;
   gap: 1.6rem;
-  padding: 1.6rem 2.4rem 2.4rem 2.4rem;
-
   overflow-x: scroll;
-  /* overflow-y: hidden; */
+  padding: 1.6rem 2.4rem 2.4rem 2.4rem;
 
   &::-webkit-scrollbar {
     width: 6px;
@@ -128,11 +136,11 @@ const ActionButton = styled.button`
   }
 `;
 
-const dummyData = {
+const groupDummyData = {
   thumbnail: {
-    url: 'https://api.nudge-community.com/attachments/7728799',
+    url: 'https://photo.newsen.com/news_photo/2024/03/22/202403221104030410_4.jpeg',
   },
-  title: '성진',
+  title: '데이식스 천안 차대절 🎸',
   description: '데이식스 FOREVER YOUNG 천안 차대절 단체 채팅방 입니다!',
   me: {
     memberId: 1,
@@ -166,6 +174,28 @@ const dummyData = {
   ],
 };
 
+const privateDummyData = {
+  thumbnail: {
+    url: 'https://api.nudge-community.com/attachments/7728799',
+  },
+  title: '성진',
+  description: '데이식스 FOREVER YOUNG 천안 차대절 단체 채팅방 입니다!',
+  me: {
+    memberId: 1,
+    nickname: '짱구',
+    profileImage: {
+      url: 'https://mblogthumb-phinf.pstatic.net/MjAyMDEyMTRfMjkx/MDAxNjA3ODczNTIyMTY1.SWSlQJjMYvMZE3PcvMVkd2GLEECywGS9zi3Ps9eoh8sg.z9Gmy-mCezPiSkK0lTbzSaHSinbl5B4sBcT0o5W9ZnAg.JPEG.sosohan_n/24_(2).jpg?type=w800',
+    },
+  },
+  otherMember: {
+    memberId: 2,
+    nickname: '성진',
+    profileImage: {
+      url: 'https://api.nudge-community.com/attachments/7728799',
+    },
+  },
+};
+
 const ChatDrawer = ({ toggleDrawer }: ChatDrawerProps) => {
   const { id } = useParams();
   const { pathname } = useLocation();
@@ -173,16 +203,29 @@ const ChatDrawer = ({ toggleDrawer }: ChatDrawerProps) => {
   const { openModal } = useModalStore(['openModal']);
   const { addToast } = useToastStore(['addToast']);
 
-  const { thumbnail, title, description, me, manager, participants } = dummyData;
-
   const isGroupChat = pathname.startsWith('/chat/group/');
+
+  // 추후 수정
+  let dummyData: DummyData = privateDummyData;
+
+  if (isGroupChat) {
+    dummyData = groupDummyData;
+  }
+
+  //const { thumbnail, title, description, me, manager, participants } = groupDummyData;
+  const { thumbnail, title, description, me, manager, participants, otherMember } = dummyData;
 
   const handleSettingClick = () => {
     navigate(`/chat/group/${id}/edit`, { state: { thumbnail, title, description } });
   };
 
   const handleExitClick = () => {
-    if (me.memberId === manager.memberId && participants.length > 1 && isGroupChat) {
+    if (
+      participants &&
+      me.memberId === manager?.memberId &&
+      participants.length > 1 &&
+      isGroupChat
+    ) {
       addToast(
         TOAST_MESSAGES.PREVENT_EXIT_CHAT,
         <LuAlertCircle size={16} style={{ flexShrink: 0, color: '#FF595E' }} />
@@ -207,10 +250,17 @@ const ChatDrawer = ({ toggleDrawer }: ChatDrawerProps) => {
         <Description>
           <CaptionText>{description}</CaptionText>
         </Description>
-        <MemberList manager={manager} me={me} participants={participants} />
+        <MemberList
+          manager={manager}
+          me={me}
+          otherMember={otherMember}
+          participants={participants}
+        />
       </ContentContainer>
-      <DrawerBottomContainer isManager={me.memberId === manager.memberId && isGroupChat}>
-        {isGroupChat && me.memberId === manager.memberId && (
+      <DrawerBottomContainer
+        isManager={(manager && me.memberId === manager.memberId && isGroupChat) || false}
+      >
+        {isGroupChat && me.memberId === manager?.memberId && (
           <ActionButton onClick={handleSettingClick}>
             <TbSettings size={24} />
           </ActionButton>
