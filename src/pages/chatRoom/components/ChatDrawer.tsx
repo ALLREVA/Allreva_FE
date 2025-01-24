@@ -216,7 +216,7 @@ const ChatDrawer = ({ toggleDrawer }: ChatDrawerProps) => {
   const { thumbnail, title, description, me, manager, participants, otherMember } = dummyData;
 
   const handleSettingClick = () => {
-    navigate(`/chat/group/${id}/edit`, { state: { thumbnail, title, description } });
+    navigate(`/chat/group/${id}/edit`, { state: { thumbnail: thumbnail.url, title, description } });
   };
 
   const handleExitClick = () => {
