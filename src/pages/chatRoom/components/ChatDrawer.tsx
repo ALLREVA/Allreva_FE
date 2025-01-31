@@ -2,27 +2,20 @@ import styled from '@emotion/styled';
 import { LuAlertCircle } from 'react-icons/lu';
 import { PiSignOutBold } from 'react-icons/pi';
 import { TbChevronLeft, TbSettings } from 'react-icons/tb';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import ExitDialog from './ExitDialog';
-import type { MemberListProps } from './MemberList';
 import MemberList from './MemberList';
 
 import { TOAST_MESSAGES } from 'constants/toastMessage';
+import { useGetChatInfo } from 'queries/chat/useGetChatInfo';
 import { useModalStore, useToastStore } from 'stores';
 import { BodyMediumText, CaptionText } from 'styles/Typography';
-
-// 추후 삭제
-interface DummyData extends MemberListProps {
-  title: string;
-  thumbnail: {
-    url: string;
-  };
-  description: string;
-}
+import type { ChatType } from 'types';
 
 interface ChatDrawerProps {
   toggleDrawer: () => void;
+  chatType: ChatType;
 }
 
 const DrawerContainer = styled.div`
@@ -136,84 +129,18 @@ const ActionButton = styled.button`
   }
 `;
 
-const groupDummyData = {
-  thumbnail: {
-    url: 'https://photo.newsen.com/news_photo/2024/03/22/202403221104030410_4.jpeg',
-  },
-  title: '데이식스 천안 차대절 🎸',
-  description: '데이식스 FOREVER YOUNG 천안 차대절 단체 채팅방 입니다!',
-  me: {
-    memberId: 1,
-    nickname: '짱구',
-    profileImage: {
-      url: 'https://mblogthumb-phinf.pstatic.net/MjAyMDEyMTRfMjkx/MDAxNjA3ODczNTIyMTY1.SWSlQJjMYvMZE3PcvMVkd2GLEECywGS9zi3Ps9eoh8sg.z9Gmy-mCezPiSkK0lTbzSaHSinbl5B4sBcT0o5W9ZnAg.JPEG.sosohan_n/24_(2).jpg?type=w800',
-    },
-  },
-  manager: {
-    memberId: 1,
-    nickname: '짱구',
-    profileImage: {
-      url: 'https://mblogthumb-phinf.pstatic.net/MjAyMDEyMTRfMjkx/MDAxNjA3ODczNTIyMTY1.SWSlQJjMYvMZE3PcvMVkd2GLEECywGS9zi3Ps9eoh8sg.z9Gmy-mCezPiSkK0lTbzSaHSinbl5B4sBcT0o5W9ZnAg.JPEG.sosohan_n/24_(2).jpg?type=w800',
-    },
-  },
-  participants: [
-    {
-      memberId: 1,
-      nickname: '짱구',
-      profileImage: {
-        url: 'https://mblogthumb-phinf.pstatic.net/MjAyMDEyMTRfMjkx/MDAxNjA3ODczNTIyMTY1.SWSlQJjMYvMZE3PcvMVkd2GLEECywGS9zi3Ps9eoh8sg.z9Gmy-mCezPiSkK0lTbzSaHSinbl5B4sBcT0o5W9ZnAg.JPEG.sosohan_n/24_(2).jpg?type=w800',
-      },
-    },
-    {
-      memberId: 2,
-      nickname: '성진',
-      profileImage: {
-        url: 'https://api.nudge-community.com/attachments/7728799',
-      },
-    },
-  ],
-};
-
-const privateDummyData = {
-  thumbnail: {
-    url: 'https://api.nudge-community.com/attachments/7728799',
-  },
-  title: '성진',
-  description: '데이식스 FOREVER YOUNG 천안 차대절 단체 채팅방 입니다!',
-  me: {
-    memberId: 1,
-    nickname: '짱구',
-    profileImage: {
-      url: 'https://mblogthumb-phinf.pstatic.net/MjAyMDEyMTRfMjkx/MDAxNjA3ODczNTIyMTY1.SWSlQJjMYvMZE3PcvMVkd2GLEECywGS9zi3Ps9eoh8sg.z9Gmy-mCezPiSkK0lTbzSaHSinbl5B4sBcT0o5W9ZnAg.JPEG.sosohan_n/24_(2).jpg?type=w800',
-    },
-  },
-  otherMember: {
-    memberId: 2,
-    nickname: '성진',
-    profileImage: {
-      url: 'https://api.nudge-community.com/attachments/7728799',
-    },
-  },
-};
-
-const ChatDrawer = ({ toggleDrawer }: ChatDrawerProps) => {
+const ChatDrawer = ({ toggleDrawer, chatType }: ChatDrawerProps) => {
   const { id } = useParams();
-  const { pathname } = useLocation();
   const navigate = useNavigate();
   const { openModal } = useModalStore(['openModal']);
   const { addToast } = useToastStore(['addToast']);
 
-  const isGroupChat = pathname.startsWith('/chat/group/');
+  const { data: chatInfo } = useGetChatInfo(parseInt(id as string), chatType);
 
-  // 추후 수정
-  let dummyData: DummyData = privateDummyData;
+  if (!chatInfo) return;
 
-  if (isGroupChat) {
-    dummyData = groupDummyData;
-  }
-
-  //const { thumbnail, title, description, me, manager, participants } = groupDummyData;
-  const { thumbnail, title, description, me, manager, participants, otherMember } = dummyData;
+  const { thumbnail, title, description, me, manager, participants, otherMember } = chatInfo;
+  const isGroupChat = chatType === 'GROUP';
 
   const handleSettingClick = () => {
     navigate(`/chat/group/${id}/edit`, { state: { thumbnail: thumbnail.url, title, description } });
@@ -251,6 +178,7 @@ const ChatDrawer = ({ toggleDrawer }: ChatDrawerProps) => {
           <CaptionText>{description}</CaptionText>
         </Description>
         <MemberList
+          isGroupChat={isGroupChat}
           manager={manager}
           me={me}
           otherMember={otherMember}

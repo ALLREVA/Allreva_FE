@@ -1,23 +1,16 @@
 import styled from '@emotion/styled';
 import { FaCrown, FaUserGroup } from 'react-icons/fa6';
 import { TbMessageCircle } from 'react-icons/tb';
-import { useLocation } from 'react-router-dom';
 
 import { CaptionText, ChipText, SmallText } from 'styles/Typography';
-
-interface Member {
-  memberId: number;
-  nickname: string;
-  profileImage: {
-    url: string;
-  };
-}
+import type { MemberInfo } from 'types';
 
 export interface MemberListProps {
-  me: Member;
-  manager?: Member;
-  participants?: Member[];
-  otherMember?: Member;
+  isGroupChat: boolean;
+  me: MemberInfo;
+  manager?: MemberInfo;
+  participants?: MemberInfo[];
+  otherMember?: MemberInfo;
 }
 
 const MemberListContainer = styled.div`
@@ -106,11 +99,7 @@ const PrivateChatButton = styled.button`
   }
 `;
 
-const MemberList = ({ me, manager, participants, otherMember }: MemberListProps) => {
-  const { pathname } = useLocation();
-
-  const isGroupChat = pathname.startsWith('/chat/group/');
-
+const MemberList = ({ isGroupChat, me, manager, participants, otherMember }: MemberListProps) => {
   return (
     <MemberListContainer>
       <MemberListTop>
