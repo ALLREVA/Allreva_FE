@@ -2,17 +2,15 @@ import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
 import { CaptionText, ChipText, SmallText } from 'styles/Typography';
+import type { ChatInfoSummary, ChatPreviewMessage, ChatType } from 'types';
 import { formatCustomTime } from 'utils';
 
 interface ChatItemProps {
-  id: string;
-  chatImg: string;
-  title: string;
-  members: number | null;
-  lastTime: string;
-  lastChatContent: string;
-  lastChatNum: number;
-  readChatNum: number;
+  roomId: number;
+  chatType: ChatType;
+  chatInfoSummary: ChatInfoSummary;
+  previewMessage: ChatPreviewMessage;
+  lastReadMessageNumber: number;
 }
 
 const ChatItemContainer = styled.li`
@@ -108,41 +106,45 @@ const BadgeContainer = styled.div<{ isVisible: boolean }>`
 `;
 
 const ChatItem = ({
-  id,
-  chatImg,
-  title,
-  members,
-  lastTime,
-  lastChatContent,
-  lastChatNum,
-  readChatNum,
+  roomId,
+  chatType,
+  chatInfoSummary,
+  previewMessage,
+  lastReadMessageNumber,
 }: ChatItemProps) => {
   const navigate = useNavigate();
 
-  const chatCount = lastChatNum - readChatNum;
+  const { title, thumbnail, headcount } = chatInfoSummary;
+  const { previewMessageNumber, previewText, sentAt } = previewMessage;
+
+  const chatCount = previewMessageNumber - lastReadMessageNumber;
 
   const handleChatClick = () => {
-    if (members) {
-      navigate(`/chat/group/${id}`, { state: { title, members } });
+    if (chatType === 'GROUP') {
+      navigate(`/chat/group/${roomId}`, {
+        state: { title, members: headcount, lastMessageNum: previewMessageNumber },
+      });
     } else {
-      navigate(`/chat/private/${id}`, { state: { title, members } });
+      navigate(`/chat/private/${roomId}`, {
+        state: { title, members: headcount, lastMessageNum: previewMessageNumber },
+      });
     }
   };
 
   return (
     <ChatItemContainer onClick={handleChatClick}>
       <ChatImageWrapper>
-        <ChatImage alt={title} src={chatImg} />
+        <ChatImage alt={title} src={thumbnail.url} />
       </ChatImageWrapper>
       <ChatContent>
         <ChatContentTop>
           <ChatTitle>{title}</ChatTitle>
-          <Members>{members}</Members>
+          {chatType === 'GROUP' && <Members>{headcount}</Members>}
         </ChatContentTop>
-        <LastMessage>{lastChatContent}</LastMessage>
+        <LastMessage>{previewText}</LastMessage>
       </ChatContent>
       <ChatDetailInfo>
-        <LastChatTime>{formatCustomTime(lastTime)}</LastChatTime>
+        <LastChatTime>{formatCustomTime(sentAt)}</LastChatTime>
         <BadgeContainer isVisible={chatCount > 0}>
           <SmallText>{chatCount > 99 ? `99+` : `${chatCount}`}</SmallText>
         </BadgeContainer>
