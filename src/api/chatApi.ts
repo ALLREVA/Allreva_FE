@@ -13,3 +13,7 @@ export const requestGetSingleChatInfo = async (chatId: number) => {
 export const requestGetGroupChatInfo = async (chatId: number) => {
   return await tokenAxios.get<GroupChatInfoResponse>(endPoint.GET_GROUP_CHAT_INFO(chatId));
 };
+
+export const requestPatchGroupChat = async (formData: FormData) => {
+  return await tokenAxios.patch(endPoint.UPDATE_GROUP_CHAT, formData);
+};

@@ -60,6 +60,14 @@ export interface ChatInfo {
   otherMember?: MemberInfo;
 }
 
+// Edit Group Chat
+export interface GroupChatData {
+  groupChatId: number;
+  title: string;
+  description: string;
+  imageFile: File;
+}
+
 export type ChatListResponse = ApiResponse<ChatList[]>;
 export type SingleChatInfoResponse = ApiResponse<SingleChatInfo>;
 export type GroupChatInfoResponse = ApiResponse<GroupChatInfo>;

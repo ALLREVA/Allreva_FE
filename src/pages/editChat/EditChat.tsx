@@ -69,7 +69,7 @@ const EditChat = () => {
   const { handleSubmit } = methods;
 
   const onSubmit = (data: ChatFormData) => {
-    openModal('dialog', 'confirm', <EditChatDialog formData={data} />);
+    openModal('dialog', 'confirm', <EditChatDialog groupChatData={data} />);
   };
 
   return (

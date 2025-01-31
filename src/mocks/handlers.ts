@@ -293,4 +293,14 @@ export const handlers = [
       },
     });
   }),
+
+  // edit chat
+  http.patch(`${API_URL}${endPoint.UPDATE_GROUP_CHAT}`, () => {
+    return HttpResponse.json({
+      timeStamp: '2025-01-31T17:13:56.217Z',
+      code: '200',
+      message: 'Success',
+      result: {},
+    });
+  }),
 ];

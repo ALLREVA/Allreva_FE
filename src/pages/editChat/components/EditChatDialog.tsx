@@ -1,5 +1,8 @@
+import { useNavigate, useParams } from 'react-router-dom';
+
 import BaseButton from 'components/buttons/BaseButton';
 import Dialog from 'components/dialog/Dialog';
+import { usePatchGroupChat } from 'queries/chat/usePatchGroupChat';
 import { useModalStore } from 'stores';
 import { TitleText2 } from 'styles/Typography';
 
@@ -10,15 +13,25 @@ export interface ChatFormData {
 }
 
 interface EditChatDialogProps {
-  formData: ChatFormData;
+  groupChatData: ChatFormData;
 }
 
-const EditChatDialog = ({ formData }: EditChatDialogProps) => {
+const EditChatDialog = ({ groupChatData }: EditChatDialogProps) => {
+  const { id } = useParams();
+  const navigate = useNavigate();
   const { closeModal } = useModalStore(['closeModal']);
+  const { mutate } = usePatchGroupChat();
+
+  const handleSubmitSuccess = () => {
+    navigate(`/chat/group/${id}`);
+    closeModal('dialog', 'confirm');
+  };
 
   const handleSubmitClick = () => {
-    console.log(formData);
-    // closeModal('dialog', 'confirm');
+    if (id) {
+      const groupChatId = parseInt(id);
+      mutate({ ...groupChatData, groupChatId }, { onSuccess: handleSubmitSuccess });
+    }
   };
 
   return (
