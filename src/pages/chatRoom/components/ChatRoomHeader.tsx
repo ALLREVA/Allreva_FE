@@ -70,7 +70,7 @@ const ChatRoomHeader = ({ onMoreClick }: ChatRoomHeaderProps) => {
 
   return (
     <ChatHeaderContainer>
-      <ActionButton onClick={() => navigate(-1)}>
+      <ActionButton onClick={() => navigate('/chat')}>
         <TbChevronLeft size={24} />
       </ActionButton>
       <TitleWrapper>

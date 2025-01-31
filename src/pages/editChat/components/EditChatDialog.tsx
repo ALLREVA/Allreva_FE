@@ -23,7 +23,7 @@ const EditChatDialog = ({ groupChatData }: EditChatDialogProps) => {
   const { mutate } = usePatchGroupChat();
 
   const handleSubmitSuccess = () => {
-    navigate(`/chat/group/${id}`);
+    navigate('/chat');
     closeModal('dialog', 'confirm');
   };
 

@@ -303,4 +303,34 @@ export const handlers = [
       result: {},
     });
   }),
+
+  // exit group chat
+  http.delete(`${API_URL}${endPoint.LEAVE_GROUP_CHAT}`, () => {
+    return HttpResponse.json({
+      timeStamp: '2025-01-31T17:13:56.217Z',
+      code: '200',
+      message: 'Success',
+      result: {},
+    });
+  }),
+
+  // exit single chat
+  http.delete(`${API_URL}${endPoint.LEAVE_SINGLE_CHAT}`, () => {
+    return HttpResponse.json({
+      timeStamp: '2025-01-31T17:13:56.217Z',
+      code: '200',
+      message: 'Success',
+      result: {},
+    });
+  }),
+
+  // delete group chat
+  http.delete(`${API_URL}${endPoint.DELETE_GROUP_CHAT}`, () => {
+    return HttpResponse.json({
+      timeStamp: '2025-01-31T17:13:56.217Z',
+      code: '200',
+      message: 'Success',
+      result: {},
+    });
+  }),
 ];

@@ -17,3 +17,15 @@ export const requestGetGroupChatInfo = async (chatId: number) => {
 export const requestPatchGroupChat = async (formData: FormData) => {
   return await tokenAxios.patch(endPoint.UPDATE_GROUP_CHAT, formData);
 };
+
+export const requestDeleteGroupChat = async (groupChatId: number) => {
+  return await tokenAxios.delete(endPoint.DELETE_GROUP_CHAT, { data: { groupChatId } });
+};
+
+export const requestLeaveGroupChat = async (groupChatId: number) => {
+  return await tokenAxios.delete(endPoint.LEAVE_GROUP_CHAT, { data: { groupChatId } });
+};
+
+export const requestLeaveSingleChat = async (singleChatId: number) => {
+  return await tokenAxios.delete(endPoint.LEAVE_SINGLE_CHAT, { data: { singleChatId } });
+};

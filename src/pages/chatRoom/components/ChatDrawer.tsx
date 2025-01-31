@@ -158,7 +158,15 @@ const ChatDrawer = ({ toggleDrawer, chatType }: ChatDrawerProps) => {
         <LuAlertCircle size={16} style={{ flexShrink: 0, color: '#FF595E' }} />
       );
     } else {
-      openModal('dialog', 'confirm', <ExitDialog />);
+      openModal(
+        'dialog',
+        'confirm',
+        <ExitDialog
+          chatId={parseInt(id as string)}
+          chatType={chatType}
+          isManager={me.memberId === manager?.memberId}
+        />
+      );
     }
   };
 
