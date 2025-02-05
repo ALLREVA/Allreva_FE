@@ -19,6 +19,7 @@ const ChatHeaderContainer = styled.div`
   max-width: ${({ theme }) => theme.maxWidth};
   height: 5.2rem;
   padding: 0 1.6rem;
+  background-color: ${({ theme }) => theme.colors.black};
   color: ${({ theme }) => theme.colors.white};
   text-align: center;
   white-space: nowrap;
@@ -66,7 +67,7 @@ const ActionButtonWrapper = styled.div`
 const ChatRoomHeader = ({ onMoreClick }: ChatRoomHeaderProps) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { title, members } = location.state || {};
+  const { title, members, chatType } = location.state || {};
 
   return (
     <ChatHeaderContainer>
@@ -75,7 +76,7 @@ const ChatRoomHeader = ({ onMoreClick }: ChatRoomHeaderProps) => {
       </ActionButton>
       <TitleWrapper>
         <Title>{title}</Title>
-        {members && <Members>{members}</Members>}
+        {chatType === 'GROUP' && <Members>{members}</Members>}
       </TitleWrapper>
       <ActionButtonWrapper>
         <ActionButton>

@@ -94,3 +94,8 @@ export const formatCustomTime = (dateString: string) => {
 
   return `${date.get('M') + 1}월 ${date.get('D')}일`;
 };
+
+// format time
+export const formatTime = (time: string) => {
+  return dayjs(time).format('HH:mm');
+};

@@ -1,12 +1,14 @@
 import styled from '@emotion/styled';
 
 import { CaptionText, SmallText } from 'styles/Typography';
+import type { MessageType } from 'types';
 
 interface OtherChatProps {
   profileImg: string;
   nickname: string;
   content: string;
   time: string;
+  contentType: MessageType;
 }
 
 const OtherChatContainer = styled.div`
@@ -53,6 +55,12 @@ const SpeechBubble = styled.div`
   background-color: ${({ theme }) => theme.colors.dark[700]};
 `;
 
+const Image = styled.img`
+  width: 100%;
+  max-width: 23.2rem;
+  border-radius: 8px;
+`;
+
 const ChatDetail = styled.div``;
 
 // const UnreadCount = styled(SmallText)`
@@ -64,7 +72,7 @@ const ChatTime = styled(SmallText)`
   color: ${({ theme }) => theme.colors.dark[200]};
 `;
 
-const OtherChat = ({ profileImg, nickname, content, time }: OtherChatProps) => {
+const OtherChat = ({ profileImg, nickname, content, time, contentType }: OtherChatProps) => {
   return (
     <OtherChatContainer>
       <ProfileImgWrapper>
@@ -73,9 +81,12 @@ const OtherChat = ({ profileImg, nickname, content, time }: OtherChatProps) => {
       <ChatContent>
         <Nickname>{nickname}</Nickname>
         <MessageWrapper>
-          <SpeechBubble>
-            <CaptionText>{content}</CaptionText>
-          </SpeechBubble>
+          {contentType === 'TEXT' && (
+            <SpeechBubble>
+              <CaptionText>{content}</CaptionText>
+            </SpeechBubble>
+          )}
+          {contentType === 'IMAGE' && <Image alt={content} src={content} />}
           <ChatDetail>
             {/* <UnreadCount>2</UnreadCount> */}
             <ChatTime>{time}</ChatTime>

@@ -9,6 +9,8 @@ const ChatInputContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 1.2rem;
+  position: sticky;
+  bottom: 0;
   max-height: 12rem;
   padding: 1.4rem 2.4rem;
   background-color: ${({ theme }) => theme.colors.dark[800]};

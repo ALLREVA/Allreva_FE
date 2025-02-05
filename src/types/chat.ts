@@ -1,6 +1,7 @@
 import type { ApiResponse } from './api';
 
 export type ChatType = 'SINGLE' | 'GROUP';
+export type MessageType = 'TEXT' | 'IMAGE';
 
 // chat list
 export interface ChatInfoSummary {
@@ -68,6 +69,37 @@ export interface GroupChatData {
   imageFile: File;
 }
 
+// Single Chat Room
+export interface ChatMessage {
+  messageNumber: number;
+  content: {
+    contentType: MessageType;
+    payload: string;
+  };
+  sender: {
+    memberId: number;
+    nickname: string;
+    profileImage: {
+      url: string;
+    };
+  };
+  sentAt: string;
+}
+
+export interface EnterSingleChat {
+  myId: number;
+  messages: ChatMessage[] | [];
+}
+
+export interface ChatMessageParam {
+  singleChatId: number;
+  criteriaNumber: number;
+}
+
 export type ChatListResponse = ApiResponse<ChatList[]>;
 export type SingleChatInfoResponse = ApiResponse<SingleChatInfo>;
 export type GroupChatInfoResponse = ApiResponse<GroupChatInfo>;
+export type CreateSingleChatResponse = ApiResponse<number>;
+export type EnterSingleChatResponse = ApiResponse<EnterSingleChat>;
+export type ReadSingleChatResponse = ApiResponse<ChatMessage[]>;
+export type UnreadSingleChatResponse = ApiResponse<ChatMessage[]>;

@@ -1,5 +1,13 @@
 import { endPoint } from 'constants/endPoint';
-import type { ChatListResponse, GroupChatInfoResponse, SingleChatInfoResponse } from 'types';
+import type {
+  ChatListResponse,
+  CreateSingleChatResponse,
+  EnterSingleChatResponse,
+  GroupChatInfoResponse,
+  ReadSingleChatResponse,
+  SingleChatInfoResponse,
+  UnreadSingleChatResponse,
+} from 'types';
 import { tokenAxios } from 'utils';
 
 export const requestGetChatList = async () => {
@@ -28,4 +36,29 @@ export const requestLeaveGroupChat = async (groupChatId: number) => {
 
 export const requestLeaveSingleChat = async (singleChatId: number) => {
   return await tokenAxios.delete(endPoint.LEAVE_SINGLE_CHAT, { data: { singleChatId } });
+};
+
+// Single Chat Room
+export const requestPostSingleChat = async (otherMemberId: number) => {
+  return await tokenAxios.post<CreateSingleChatResponse>(endPoint.CREATE_SINGLE_CHAT, {
+    data: { otherMemberId },
+  });
+};
+
+export const requestGetEnterSingleChat = async (singleChatId: number) => {
+  return await tokenAxios.get<EnterSingleChatResponse>(
+    `${endPoint.GET_SINGLE_CHAT_INIT_MESSAGES}?singleChatId=${singleChatId}`
+  );
+};
+
+export const requestGetReadSingleChat = async (singleChatId: number, criteriaNumber: number) => {
+  return await tokenAxios.get<ReadSingleChatResponse>(
+    `${endPoint.GET_SINGLE_CHAT_READ_MESSAGES}?singleChatId=${singleChatId}&criteriaNumber=${criteriaNumber}`
+  );
+};
+
+export const requestGetUnreadSingleChat = async (singleChatId: number, criteriaNumber: number) => {
+  return await tokenAxios.get<UnreadSingleChatResponse>(
+    `${endPoint.GET_SINGLE_CHAT_UNREAD_MESSAGES}?singleChatId=${singleChatId}&criteriaNumber=${criteriaNumber}`
+  );
 };
