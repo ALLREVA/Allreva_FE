@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { UIMatch } from 'react-router-dom';
-import { Outlet, useMatches } from 'react-router-dom';
+import { Outlet, useMatches, useParams } from 'react-router-dom';
 
 import ChatDrawer from 'pages/chatRoom/components/ChatDrawer';
 import ChatRoomHeader from 'pages/chatRoom/components/ChatRoomHeader';
@@ -23,6 +23,7 @@ const MainWrapper = styled.main`
 `;
 
 export const ChatRoomLayout = () => {
+  const { id = '' } = useParams();
   const matches = useMatches() as Array<UIMatch<unknown, RouteHandle>>;
   const activeRoute = matches[matches.length - 1];
   const { chatType } = activeRoute.handle;
@@ -30,6 +31,10 @@ export const ChatRoomLayout = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const toggleDrawer = () => setDrawerOpen(!drawerOpen);
+
+  useEffect(() => {
+    setDrawerOpen(false);
+  }, [id]);
 
   return (
     <LayoutContainer>

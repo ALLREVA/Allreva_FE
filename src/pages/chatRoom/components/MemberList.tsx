@@ -1,7 +1,9 @@
 import styled from '@emotion/styled';
 import { FaCrown, FaUserGroup } from 'react-icons/fa6';
 import { TbMessageCircle } from 'react-icons/tb';
+import { useNavigate } from 'react-router-dom';
 
+import { requestPostSingleChat } from 'api';
 import { CaptionText, ChipText, SmallText } from 'styles/Typography';
 import type { MemberInfo } from 'types';
 
@@ -100,6 +102,17 @@ const PrivateChatButton = styled.button`
 `;
 
 const MemberList = ({ isGroupChat, me, manager, participants, otherMember }: MemberListProps) => {
+  const navigate = useNavigate();
+
+  const handleChatClick = async (otherMemberId: number, nickname: string) => {
+    const { data } = await requestPostSingleChat(otherMemberId);
+    const singleChatId = data.result;
+
+    navigate(`/chat/private/${singleChatId}`, {
+      state: { title: nickname, chatType: 'SINGLE' },
+    });
+  };
+
   return (
     <MemberListContainer>
       <MemberListTop>
@@ -125,7 +138,9 @@ const MemberList = ({ isGroupChat, me, manager, participants, otherMember }: Mem
               </Manager>
             </MemberProfile>
             {manager.memberId !== me.memberId && (
-              <PrivateChatButton>
+              <PrivateChatButton
+                onClick={() => handleChatClick(manager.memberId, manager.nickname)}
+              >
                 <TbMessageCircle size={14} />
                 <SmallText>1:1</SmallText>
               </PrivateChatButton>
@@ -161,7 +176,9 @@ const MemberList = ({ isGroupChat, me, manager, participants, otherMember }: Mem
                     </CaptionText>
                   </MemberProfile>
                   {manager?.memberId === me.memberId && isGroupChat && (
-                    <PrivateChatButton>
+                    <PrivateChatButton
+                      onClick={() => handleChatClick(member.memberId, member.nickname)}
+                    >
                       <TbMessageCircle size={14} />
                       <SmallText>1:1</SmallText>
                     </PrivateChatButton>

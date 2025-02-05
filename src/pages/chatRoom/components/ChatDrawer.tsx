@@ -8,7 +8,7 @@ import ExitDialog from './ExitDialog';
 import MemberList from './MemberList';
 
 import { TOAST_MESSAGES } from 'constants/toastMessage';
-import { useGetChatInfo } from 'queries/chat/useGetChatInfo';
+import { useGetChatInfo } from 'queries/chat';
 import { useModalStore, useToastStore } from 'stores';
 import { BodyMediumText, CaptionText } from 'styles/Typography';
 import type { ChatType } from 'types';
