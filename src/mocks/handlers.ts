@@ -1,7 +1,14 @@
+import type { DefaultBodyType, StrictRequest } from 'msw';
 import { http, HttpResponse } from 'msw';
 
 import { endPoint } from 'constants/endPoint';
 import { API_URL } from 'constants/url';
+
+interface JoinChatRequest extends StrictRequest<DefaultBodyType> {
+  data: {
+    uuid: string;
+  };
+}
 
 export const handlers = [
   http.get(`${API_URL}${endPoint.GET_CHAT_LIST}`, () => {
@@ -394,6 +401,7 @@ export const handlers = [
         message: 'Success',
         result: {
           myId: 1,
+          lastReadMessageNumber: 7,
           messages: [
             {
               messageNumber: 5,
@@ -574,6 +582,7 @@ export const handlers = [
         message: 'Success',
         result: {
           myId: 1,
+          lastReadMessageNumber: 2,
           messages: [
             {
               messageNumber: 1,
@@ -617,6 +626,7 @@ export const handlers = [
         message: 'Success',
         result: {
           myId: 1,
+          lastReadMessageNumber: 2,
           messages: [
             {
               messageNumber: 1,
@@ -865,6 +875,28 @@ export const handlers = [
       code: '200',
       message: 'Success',
       result: [],
+    });
+  }),
+
+  // join group chat
+  http.post(`${API_URL}${endPoint.CREATE_GROUP_CHAT}`, async ({ request }) => {
+    const { data } = (await request.json()) as JoinChatRequest;
+    const uuid = data.uuid;
+
+    if (uuid === 'cfcb2583-4713-4418-91ee-93be8f624738') {
+      return HttpResponse.json({
+        timeStamp: '2025-01-31T17:13:56.217Z',
+        code: '200',
+        message: 'Success',
+        result: 1,
+      });
+    }
+
+    return HttpResponse.json({
+      timeStamp: '2025-01-31T17:13:56.217Z',
+      code: '200',
+      message: 'Success',
+      result: null,
     });
   }),
 ];

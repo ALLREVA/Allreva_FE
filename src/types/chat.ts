@@ -88,6 +88,7 @@ export interface ChatMessage {
 
 export interface EnterSingleChat {
   myId: number;
+  lastReadMessageNumber: number;
   messages: ChatMessage[] | [];
 }
 
@@ -103,3 +104,4 @@ export type CreateSingleChatResponse = ApiResponse<number>;
 export type EnterSingleChatResponse = ApiResponse<EnterSingleChat>;
 export type ReadSingleChatResponse = ApiResponse<ChatMessage[]>;
 export type UnreadSingleChatResponse = ApiResponse<ChatMessage[]>;
+export type JoinGroupChatResponse = ApiResponse<number>;

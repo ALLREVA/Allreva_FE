@@ -1,7 +1,9 @@
 import styled from '@emotion/styled';
 import { BsCircleFill } from 'react-icons/bs';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import BaseButton from 'components/buttons/BaseButton';
+import { usePostGroupChat } from 'queries/chat';
 import { BodyRegularText, TitleText1 } from 'styles/Typography';
 
 interface JoinChatProps {
@@ -69,14 +71,26 @@ const BottomButtonWrapper = styled.div`
 
 const dummyData = {
   chatImg:
-    'https://static.news.zumst.com/images/58/2024/03/20/4e6fa70a9a0b4afea77fd9af8d217987.jpg',
+    'https://www.news1.kr/_next/image?url=https%3A%2F%2Fi3n.news1.kr%2Fsystem%2Fphotos%2F2024%2F3%2F15%2F6537495%2Fhigh.jpg&w=1920&q=75',
   title: '데이식스 천안 차대절 🎸',
   members: 5,
   description: '데이식스 FOREVER YOUNG 천안 차대절 단체 채팅방 입니다!',
 };
 
 const JoinChat = () => {
+  const { id = '' } = useParams();
+  const navigate = useNavigate();
   const { chatImg, title, members, description } = dummyData;
+
+  const { mutate } = usePostGroupChat();
+
+  const handleJoinChat = () => {
+    if (id)
+      mutate(id, {
+        onSuccess: (chatId) =>
+          navigate(`/chat/group/${chatId}`, { state: { title, members, chatType: 'GROUP' } }),
+      });
+  };
 
   return (
     <ContentContainer>
@@ -95,7 +109,7 @@ const JoinChat = () => {
         <BaseButton
           color="primary"
           isDisabled={closed}
-          onClick={() => {}}
+          onClick={handleJoinChat}
           size="medium"
           variant="fill"
         >

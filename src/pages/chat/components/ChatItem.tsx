@@ -122,11 +122,11 @@ const ChatItem = ({
   const handleChatClick = () => {
     if (chatType === 'GROUP') {
       navigate(`/chat/group/${roomId}`, {
-        state: { title, members: headcount, chatType, lastReadMessageNum: lastReadMessageNumber },
+        state: { title, members: headcount, chatType },
       });
     } else {
       navigate(`/chat/private/${roomId}`, {
-        state: { title, members: headcount, chatType, lastReadMessageNum: lastReadMessageNumber },
+        state: { title, members: headcount, chatType },
       });
     }
   };

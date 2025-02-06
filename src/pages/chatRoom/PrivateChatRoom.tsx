@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { useEffect, useRef, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import ChatInput from './components/ChatInput';
 import Message from './components/Message';
@@ -24,9 +24,6 @@ const ChatContent = styled.div`
 
 const PrivateChatRoom = () => {
   const { id = '' } = useParams();
-  const location = useLocation();
-  const { lastReadMessageNum }: { lastReadMessageNum: number } = location.state || {};
-
   const [isInitScrollSet, setIsInitScrollSet] = useState(false);
   const [myId, setMyId] = useState<number | null>(null);
   const messageRefs = useRef<Map<number, HTMLDivElement | null>>(new Map());
@@ -65,8 +62,10 @@ const PrivateChatRoom = () => {
   useEffect(() => {
     if (isInitScrollSet || !initChatMessages) return;
 
-    if (lastReadMessageNum) {
-      const targetElement = messageRefs.current.get(lastReadMessageNum);
+    const { lastReadMessageNumber } = initChatMessages;
+
+    if (lastReadMessageNumber) {
+      const targetElement = messageRefs.current.get(lastReadMessageNumber);
       if (targetElement) {
         targetElement.scrollIntoView({ behavior: 'instant', block: 'start' });
         requestAnimationFrame(() => setIsInitScrollSet(true));
@@ -74,7 +73,7 @@ const PrivateChatRoom = () => {
     }
 
     setMyId(initChatMessages.myId);
-  }, [setMyId, initChatMessages, lastReadMessageNum, isInitScrollSet]);
+  }, [setMyId, initChatMessages, isInitScrollSet]);
 
   return (
     <ContentContainer>

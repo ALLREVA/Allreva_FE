@@ -4,6 +4,7 @@ import type {
   CreateSingleChatResponse,
   EnterSingleChatResponse,
   GroupChatInfoResponse,
+  JoinGroupChatResponse,
   ReadSingleChatResponse,
   SingleChatInfoResponse,
   UnreadSingleChatResponse,
@@ -61,4 +62,11 @@ export const requestGetUnreadSingleChat = async (singleChatId: number, criteriaN
   return await tokenAxios.get<UnreadSingleChatResponse>(
     `${endPoint.GET_SINGLE_CHAT_UNREAD_MESSAGES}?singleChatId=${singleChatId}&criteriaNumber=${criteriaNumber}`
   );
+};
+
+// Join Group Chat
+export const requestPostJoinGroupChat = async (uuid: string) => {
+  return await tokenAxios.post<JoinGroupChatResponse>(endPoint.CREATE_GROUP_CHAT, {
+    data: { uuid },
+  });
 };

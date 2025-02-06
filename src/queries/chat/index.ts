@@ -7,3 +7,4 @@ export * from './useDeleteGroupChat';
 export * from './useGetInitSingleChat';
 export * from './useGetUnreadSingleChat';
 export * from './useGetReadSingleChat';
+export * from './usePostGroupChat';
