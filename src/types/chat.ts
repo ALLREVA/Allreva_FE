@@ -86,22 +86,32 @@ export interface ChatMessage {
   sentAt: string;
 }
 
-export interface EnterSingleChat {
+export interface EnterChat {
   myId: number;
   lastReadMessageNumber: number;
   messages: ChatMessage[] | [];
 }
 
-export interface ChatMessageParam {
+export interface SingleChatParam {
   singleChatId: number;
+  criteriaNumber: number;
+}
+
+export interface GroupChatParam {
+  groupChatId: number;
   criteriaNumber: number;
 }
 
 export type ChatListResponse = ApiResponse<ChatList[]>;
 export type SingleChatInfoResponse = ApiResponse<SingleChatInfo>;
 export type GroupChatInfoResponse = ApiResponse<GroupChatInfo>;
+
 export type CreateSingleChatResponse = ApiResponse<number>;
-export type EnterSingleChatResponse = ApiResponse<EnterSingleChat>;
+export type EnterSingleChatResponse = ApiResponse<EnterChat>;
 export type ReadSingleChatResponse = ApiResponse<ChatMessage[]>;
 export type UnreadSingleChatResponse = ApiResponse<ChatMessage[]>;
+
 export type JoinGroupChatResponse = ApiResponse<number>;
+export type EnterGroupChatResponse = ApiResponse<EnterChat>;
+export type ReadGroupChatResponse = ApiResponse<ChatMessage[]>;
+export type UnreadGroupChatResponse = ApiResponse<ChatMessage[]>;

@@ -2,11 +2,14 @@ import { endPoint } from 'constants/endPoint';
 import type {
   ChatListResponse,
   CreateSingleChatResponse,
+  EnterGroupChatResponse,
   EnterSingleChatResponse,
   GroupChatInfoResponse,
   JoinGroupChatResponse,
+  ReadGroupChatResponse,
   ReadSingleChatResponse,
   SingleChatInfoResponse,
+  UnreadGroupChatResponse,
   UnreadSingleChatResponse,
 } from 'types';
 import { tokenAxios } from 'utils';
@@ -64,9 +67,27 @@ export const requestGetUnreadSingleChat = async (singleChatId: number, criteriaN
   );
 };
 
-// Join Group Chat
+// Group Chat Room
 export const requestPostJoinGroupChat = async (uuid: string) => {
   return await tokenAxios.post<JoinGroupChatResponse>(endPoint.CREATE_GROUP_CHAT, {
     data: { uuid },
   });
+};
+
+export const requestGetEnterGroupChat = async (groupChatId: number) => {
+  return await tokenAxios.get<EnterGroupChatResponse>(
+    `${endPoint.GET_GROUP_CHAT_INIT_MESSAGES}?groupChatId=${groupChatId}`
+  );
+};
+
+export const requestGetReadGroupChat = async (groupChatId: number, criteriaNumber: number) => {
+  return await tokenAxios.get<ReadGroupChatResponse>(
+    `${endPoint.GET_GROUP_CHAT_READ_MESSAGES}?groupChatId=${groupChatId}&criteriaNumber=${criteriaNumber}`
+  );
+};
+
+export const requestGetUnreadGroupChat = async (groupChatId: number, criteriaNumber: number) => {
+  return await tokenAxios.get<UnreadGroupChatResponse>(
+    `${endPoint.GET_GROUP_CHAT_UNREAD_MESSAGES}?groupChatId=${groupChatId}&criteriaNumber=${criteriaNumber}`
+  );
 };

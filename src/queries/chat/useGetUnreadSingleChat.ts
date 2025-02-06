@@ -1,9 +1,9 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 
 import { requestGetUnreadSingleChat } from 'api';
-import type { ChatMessage, ChatMessageParam } from 'types';
+import type { ChatMessage, SingleChatParam } from 'types';
 
-const fetchUnreadMessages = async (pageParam: ChatMessageParam) => {
+const fetchUnreadMessages = async (pageParam: SingleChatParam) => {
   const { singleChatId, criteriaNumber } = pageParam;
   const { data } = await requestGetUnreadSingleChat(singleChatId, criteriaNumber);
   return data.result;
@@ -13,7 +13,7 @@ export const useGetUnreadSingleChat = (singleChatId: number, criteriaNumber?: nu
   return useInfiniteQuery<ChatMessage[] | []>({
     queryKey: ['unreadSingleChat', singleChatId],
     queryFn: ({ pageParam }) => {
-      return fetchUnreadMessages(pageParam as ChatMessageParam);
+      return fetchUnreadMessages(pageParam as SingleChatParam);
     },
     initialPageParam: { singleChatId, criteriaNumber },
     getNextPageParam: (lastPage) => {

@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { requestGetEnterSingleChat } from 'api';
-import type { EnterSingleChat } from 'types';
+import type { EnterChat } from 'types';
 
 export const useGetInitSingleChat = (singleChatId: number) => {
   const fetchChatMessages = async () => {
@@ -9,7 +9,7 @@ export const useGetInitSingleChat = (singleChatId: number) => {
     return data.result;
   };
 
-  return useQuery<EnterSingleChat>({
+  return useQuery<EnterChat>({
     queryKey: ['initSingleChat', singleChatId],
     queryFn: fetchChatMessages,
     enabled: !!singleChatId,

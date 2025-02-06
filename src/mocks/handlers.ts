@@ -899,4 +899,495 @@ export const handlers = [
       result: null,
     });
   }),
+
+  // enter group chat
+  http.get(`${API_URL}${endPoint.GET_GROUP_CHAT_INIT_MESSAGES}`, ({ request }) => {
+    const url = new URL(request.url);
+    const groupChatId = url.searchParams.get('groupChatId');
+
+    if (!groupChatId) return;
+
+    if (groupChatId === '1') {
+      return HttpResponse.json({
+        timeStamp: '2025-01-31T17:13:56.217Z',
+        code: '200',
+        message: 'Success',
+        result: {
+          myId: 1,
+          lastReadMessageNumber: 7,
+          messages: [
+            {
+              messageNumber: 5,
+              content: {
+                contentType: 'TEXT',
+                payload: '메시지 입니다. 메시지 입니다. 메시지 입니다. 메시지 입니다.',
+              },
+              sender: {
+                memberId: 2,
+                nickname: '성진',
+                profileImage: {
+                  url: 'https://api.nudge-community.com/attachments/7728799',
+                },
+              },
+              sentAt: '2025-02-02T10:39:29.950Z',
+            },
+            {
+              messageNumber: 6,
+              content: {
+                contentType: 'TEXT',
+                payload: '메시지 입니다. 메시지 입니다. 메시지 입니다. 메시지 입니다.',
+              },
+              sender: {
+                memberId: 3,
+                nickname: '도운',
+                profileImage: {
+                  url: 'https://pbs.twimg.com/media/GQ0U0hJbEAA86Un.jpg:large',
+                },
+              },
+              sentAt: '2025-02-02T10:39:29.950Z',
+            },
+            {
+              messageNumber: 7,
+              content: {
+                contentType: 'TEXT',
+                payload: '메시지 입니다. 메시지 입니다. 메시지 입니다. 메시지 입니다.',
+              },
+              sender: {
+                memberId: 2,
+                nickname: '성진',
+                profileImage: {
+                  url: 'https://api.nudge-community.com/attachments/7728799',
+                },
+              },
+              sentAt: '2025-02-02T10:39:29.950Z',
+            },
+            {
+              messageNumber: 8,
+              content: {
+                contentType: 'TEXT',
+                payload: '메시지 입니다. 메시지 입니다. 메시지 입니다. 메시지 입니다.',
+              },
+              sender: {
+                memberId: 4,
+                nickname: '영케이',
+                profileImage: {
+                  url: 'https://www.news1.kr/_next/image?url=https%3A%2F%2Fi3n.news1.kr%2Fsystem%2Fphotos%2F2023%2F12%2F15%2F6381980%2Fhigh.jpg&w=1920&q=75',
+                },
+              },
+              sentAt: '2025-02-02T10:39:29.950Z',
+            },
+            {
+              messageNumber: 9,
+              content: {
+                contentType: 'IMAGE',
+                payload:
+                  'https://www.news1.kr/_next/image?url=https%3A%2F%2Fi3n.news1.kr%2Fsystem%2Fphotos%2F2024%2F3%2F15%2F6537495%2Fhigh.jpg&w=1920&q=75',
+              },
+              sender: {
+                memberId: 1,
+                nickname: '짱구',
+                profileImage: {
+                  url: 'https://mblogthumb-phinf.pstatic.net/MjAyMDEyMTRfMjkx/MDAxNjA3ODczNTIyMTY1.SWSlQJjMYvMZE3PcvMVkd2GLEECywGS9zi3Ps9eoh8sg.z9Gmy-mCezPiSkK0lTbzSaHSinbl5B4sBcT0o5W9ZnAg.JPEG.sosohan_n/24_(2).jpg?type=w800',
+                },
+              },
+              sentAt: '2025-02-02T12:10:29.950Z',
+            },
+            {
+              messageNumber: 10,
+              content: {
+                contentType: 'TEXT',
+                payload: '메시지 입니다. 메시지 입니다. 메시지 입니다. 메시지 입니다.',
+              },
+              sender: {
+                memberId: 1,
+                nickname: '짱구',
+                profileImage: {
+                  url: 'https://mblogthumb-phinf.pstatic.net/MjAyMDEyMTRfMjkx/MDAxNjA3ODczNTIyMTY1.SWSlQJjMYvMZE3PcvMVkd2GLEECywGS9zi3Ps9eoh8sg.z9Gmy-mCezPiSkK0lTbzSaHSinbl5B4sBcT0o5W9ZnAg.JPEG.sosohan_n/24_(2).jpg?type=w800',
+                },
+              },
+              sentAt: '2025-02-02T12:10:29.950Z',
+            },
+            {
+              messageNumber: 11,
+              content: {
+                contentType: 'TEXT',
+                payload: '메시지 입니다. 메시지 입니다. 메시지 입니다. 메시지 입니다.',
+              },
+              sender: {
+                memberId: 1,
+                nickname: '짱구',
+                profileImage: {
+                  url: 'https://mblogthumb-phinf.pstatic.net/MjAyMDEyMTRfMjkx/MDAxNjA3ODczNTIyMTY1.SWSlQJjMYvMZE3PcvMVkd2GLEECywGS9zi3Ps9eoh8sg.z9Gmy-mCezPiSkK0lTbzSaHSinbl5B4sBcT0o5W9ZnAg.JPEG.sosohan_n/24_(2).jpg?type=w800',
+                },
+              },
+              sentAt: '2025-02-02T12:10:29.950Z',
+            },
+            {
+              messageNumber: 12,
+              content: {
+                contentType: 'IMAGE',
+                payload:
+                  'https://cf.asiaartistawards.com/news/21/2024/03/2024032008001572152_1.jpg',
+              },
+              sender: {
+                memberId: 1,
+                nickname: '짱구',
+                profileImage: {
+                  url: 'https://mblogthumb-phinf.pstatic.net/MjAyMDEyMTRfMjkx/MDAxNjA3ODczNTIyMTY1.SWSlQJjMYvMZE3PcvMVkd2GLEECywGS9zi3Ps9eoh8sg.z9Gmy-mCezPiSkK0lTbzSaHSinbl5B4sBcT0o5W9ZnAg.JPEG.sosohan_n/24_(2).jpg?type=w800',
+                },
+              },
+              sentAt: '2025-02-02T12:10:29.950Z',
+            },
+            {
+              messageNumber: 13,
+              content: {
+                contentType: 'TEXT',
+                payload: '메시지 입니다. 메시지 입니다. 메시지 입니다. 메시지 입니다.',
+              },
+              sender: {
+                memberId: 1,
+                nickname: '짱구',
+                profileImage: {
+                  url: 'https://mblogthumb-phinf.pstatic.net/MjAyMDEyMTRfMjkx/MDAxNjA3ODczNTIyMTY1.SWSlQJjMYvMZE3PcvMVkd2GLEECywGS9zi3Ps9eoh8sg.z9Gmy-mCezPiSkK0lTbzSaHSinbl5B4sBcT0o5W9ZnAg.JPEG.sosohan_n/24_(2).jpg?type=w800',
+                },
+              },
+              sentAt: '2025-02-02T12:10:29.950Z',
+            },
+            {
+              messageNumber: 14,
+              content: {
+                contentType: 'TEXT',
+                payload: '메시지 입니다. 메시지 입니다. 메시지 입니다. 메시지 입니다.',
+              },
+              sender: {
+                memberId: 1,
+                nickname: '짱구',
+                profileImage: {
+                  url: 'https://mblogthumb-phinf.pstatic.net/MjAyMDEyMTRfMjkx/MDAxNjA3ODczNTIyMTY1.SWSlQJjMYvMZE3PcvMVkd2GLEECywGS9zi3Ps9eoh8sg.z9Gmy-mCezPiSkK0lTbzSaHSinbl5B4sBcT0o5W9ZnAg.JPEG.sosohan_n/24_(2).jpg?type=w800',
+                },
+              },
+              sentAt: '2025-02-02T12:10:29.950Z',
+            },
+            {
+              messageNumber: 15,
+              content: {
+                contentType: 'TEXT',
+                payload: '메시지 입니다. 메시지 입니다. 메시지 입니다. 메시지 입니다.',
+              },
+              sender: {
+                memberId: 1,
+                nickname: '짱구',
+                profileImage: {
+                  url: 'https://mblogthumb-phinf.pstatic.net/MjAyMDEyMTRfMjkx/MDAxNjA3ODczNTIyMTY1.SWSlQJjMYvMZE3PcvMVkd2GLEECywGS9zi3Ps9eoh8sg.z9Gmy-mCezPiSkK0lTbzSaHSinbl5B4sBcT0o5W9ZnAg.JPEG.sosohan_n/24_(2).jpg?type=w800',
+                },
+              },
+              sentAt: '2025-02-02T12:10:29.950Z',
+            },
+          ],
+        },
+      });
+    }
+
+    if (groupChatId === '2') {
+      return HttpResponse.json({
+        timeStamp: '2025-01-31T17:13:56.217Z',
+        code: '200',
+        message: 'Success',
+        result: {
+          myId: 1,
+          lastReadMessageNumber: 2,
+          messages: [
+            {
+              messageNumber: 1,
+              content: {
+                contentType: 'TEXT',
+                payload: '안녕하세요',
+              },
+              sender: {
+                memberId: 4,
+                nickname: '영케이',
+                profileImage: {
+                  url: 'https://www.news1.kr/_next/image?url=https%3A%2F%2Fi3n.news1.kr%2Fsystem%2Fphotos%2F2023%2F12%2F15%2F6381980%2Fhigh.jpg&w=1920&q=75',
+                },
+              },
+              sentAt: '2025-02-02T10:39:29.950Z',
+            },
+            {
+              messageNumber: 2,
+              content: {
+                contentType: 'TEXT',
+                payload: '안녕하세요',
+              },
+              sender: {
+                memberId: 1,
+                nickname: '짱구',
+                profileImage: {
+                  url: 'https://mblogthumb-phinf.pstatic.net/MjAyMDEyMTRfMjkx/MDAxNjA3ODczNTIyMTY1.SWSlQJjMYvMZE3PcvMVkd2GLEECywGS9zi3Ps9eoh8sg.z9Gmy-mCezPiSkK0lTbzSaHSinbl5B4sBcT0o5W9ZnAg.JPEG.sosohan_n/24_(2).jpg?type=w800',
+                },
+              },
+              sentAt: '2025-02-02T12:10:29.950Z',
+            },
+          ],
+        },
+      });
+    }
+
+    if (groupChatId === '4') {
+      return HttpResponse.json({
+        timeStamp: '2025-01-31T17:13:56.217Z',
+        code: '200',
+        message: 'Success',
+        result: {
+          myId: 1,
+          lastReadMessageNumber: 2,
+          messages: [
+            {
+              messageNumber: 1,
+              content: {
+                contentType: 'TEXT',
+                payload: '안녕하세요',
+              },
+              sender: {
+                memberId: 2,
+                nickname: '도운',
+                profileImage: {
+                  url: 'https://pbs.twimg.com/media/GQ0U0hJbEAA86Un.jpg:large',
+                },
+              },
+              sentAt: '2025-02-02T10:39:29.950Z',
+            },
+            {
+              messageNumber: 2,
+              content: {
+                contentType: 'TEXT',
+                payload: '안녕하세요',
+              },
+              sender: {
+                memberId: 1,
+                nickname: '짱구',
+                profileImage: {
+                  url: 'https://mblogthumb-phinf.pstatic.net/MjAyMDEyMTRfMjkx/MDAxNjA3ODczNTIyMTY1.SWSlQJjMYvMZE3PcvMVkd2GLEECywGS9zi3Ps9eoh8sg.z9Gmy-mCezPiSkK0lTbzSaHSinbl5B4sBcT0o5W9ZnAg.JPEG.sosohan_n/24_(2).jpg?type=w800',
+                },
+              },
+              sentAt: '2025-02-02T12:10:29.950Z',
+            },
+          ],
+        },
+      });
+    }
+
+    return HttpResponse.json({
+      timeStamp: '2025-01-31T17:13:56.217Z',
+      code: '200',
+      message: 'Success',
+      result: [],
+    });
+  }),
+
+  // unread group chat
+  http.get(`${API_URL}${endPoint.GET_GROUP_CHAT_UNREAD_MESSAGES}`, ({ request }) => {
+    const url = new URL(request.url);
+    const groupChatId = url.searchParams.get('groupChatId');
+    const criteriaNumber = url.searchParams.get('criteriaNumber');
+
+    if (!groupChatId || !criteriaNumber) return;
+
+    if (groupChatId === '1' && criteriaNumber === '15') {
+      return HttpResponse.json({
+        timeStamp: '2025-01-31T17:13:56.217Z',
+        code: '200',
+        message: 'Success',
+        result: [
+          {
+            messageNumber: 16,
+            content: {
+              contentType: 'TEXT',
+              payload: '읽지 않은 메시지 입니다. 읽지 않은 메시지 입니다. 읽지 않은 메시지 입니다.',
+            },
+            sender: {
+              memberId: 2,
+              nickname: '성진',
+              profileImage: {
+                url: 'https://api.nudge-community.com/attachments/7728799',
+              },
+            },
+            sentAt: '2025-02-02T10:39:29.950Z',
+          },
+          {
+            messageNumber: 17,
+            content: {
+              contentType: 'TEXT',
+              payload: '읽지 않은 메시지 입니다. 읽지 않은 메시지 입니다. 읽지 않은 메시지 입니다.',
+            },
+            sender: {
+              memberId: 1,
+              nickname: '짱구',
+              profileImage: {
+                url: 'https://mblogthumb-phinf.pstatic.net/MjAyMDEyMTRfMjkx/MDAxNjA3ODczNTIyMTY1.SWSlQJjMYvMZE3PcvMVkd2GLEECywGS9zi3Ps9eoh8sg.z9Gmy-mCezPiSkK0lTbzSaHSinbl5B4sBcT0o5W9ZnAg.JPEG.sosohan_n/24_(2).jpg?type=w800',
+              },
+            },
+            sentAt: '2025-02-02T12:10:29.950Z',
+          },
+          {
+            messageNumber: 18,
+            content: {
+              contentType: 'TEXT',
+              payload: '읽지 않은 메시지 입니다. 읽지 않은 메시지 입니다. 읽지 않은 메시지 입니다.',
+            },
+            sender: {
+              memberId: 2,
+              nickname: '성진',
+              profileImage: {
+                url: 'https://api.nudge-community.com/attachments/7728799',
+              },
+            },
+            sentAt: '2025-02-02T10:39:29.950Z',
+          },
+        ],
+      });
+    }
+    if (groupChatId === '1' && criteriaNumber === '18') {
+      return HttpResponse.json({
+        timeStamp: '2025-02-01T17:13:56.217Z',
+        code: '200',
+        message: 'Success',
+        result: [
+          {
+            messageNumber: 19,
+            content: {
+              contentType: 'IMAGE',
+              payload: 'https://cf.asiaartistawards.com/news/21/2024/03/2024032008001572152_1.jpg',
+            },
+            sender: {
+              memberId: 2,
+              nickname: '성진',
+              profileImage: {
+                url: 'https://api.nudge-community.com/attachments/7728799',
+              },
+            },
+            sentAt: '2025-02-02T10:39:29.950Z',
+          },
+          {
+            messageNumber: 20,
+            content: {
+              contentType: 'TEXT',
+              payload:
+                '22읽지 않은 메시지 입니다. 읽지 않은 메시지 입니다. 읽지 않은 메시지 입니다.',
+            },
+            sender: {
+              memberId: 2,
+              nickname: '성진',
+              profileImage: {
+                url: 'https://api.nudge-community.com/attachments/7728799',
+              },
+            },
+            sentAt: '2025-02-02T10:39:29.950Z',
+          },
+        ],
+      });
+    }
+
+    return HttpResponse.json({
+      timeStamp: '2025-01-31T17:13:56.217Z',
+      code: '200',
+      message: 'Success',
+      result: [],
+    });
+  }),
+
+  // read group chat
+  http.get(`${API_URL}${endPoint.GET_GROUP_CHAT_READ_MESSAGES}`, ({ request }) => {
+    const url = new URL(request.url);
+    const groupChatId = url.searchParams.get('groupChatId');
+    const criteriaNumber = url.searchParams.get('criteriaNumber');
+
+    if (!groupChatId || !criteriaNumber) return;
+
+    if (groupChatId === '1' && criteriaNumber === '5') {
+      return HttpResponse.json({
+        timeStamp: '2025-01-31T17:13:56.217Z',
+        code: '200',
+        message: 'Success',
+        result: [
+          {
+            messageNumber: 2,
+            content: {
+              contentType: 'TEXT',
+              payload: '안녕하세요',
+            },
+            sender: {
+              memberId: 2,
+              nickname: '성진',
+              profileImage: {
+                url: 'https://api.nudge-community.com/attachments/7728799',
+              },
+            },
+            sentAt: '2025-02-02T10:39:29.950Z',
+          },
+          {
+            messageNumber: 3,
+            content: {
+              contentType: 'TEXT',
+              payload: '안녕하세요!',
+            },
+            sender: {
+              memberId: 1,
+              nickname: '짱구',
+              profileImage: {
+                url: 'https://mblogthumb-phinf.pstatic.net/MjAyMDEyMTRfMjkx/MDAxNjA3ODczNTIyMTY1.SWSlQJjMYvMZE3PcvMVkd2GLEECywGS9zi3Ps9eoh8sg.z9Gmy-mCezPiSkK0lTbzSaHSinbl5B4sBcT0o5W9ZnAg.JPEG.sosohan_n/24_(2).jpg?type=w800',
+              },
+            },
+            sentAt: '2025-02-02T12:10:29.950Z',
+          },
+          {
+            messageNumber: 4,
+            content: {
+              contentType: 'TEXT',
+              payload: '읽은 메시지 입니다. 읽은 메시지 입니다. 읽은 메시지 입니다.',
+            },
+            sender: {
+              memberId: 2,
+              nickname: '성진',
+              profileImage: {
+                url: 'https://api.nudge-community.com/attachments/7728799',
+              },
+            },
+            sentAt: '2025-02-02T10:39:29.950Z',
+          },
+        ],
+      });
+    }
+
+    if (groupChatId === '1' && criteriaNumber === '2') {
+      return HttpResponse.json({
+        timeStamp: '2025-01-31T17:13:56.217Z',
+        code: '200',
+        message: 'Success',
+        result: [
+          {
+            messageNumber: 1,
+            content: {
+              contentType: 'TEXT',
+              payload: '첫번째 메시지 입니다.',
+            },
+            sender: {
+              memberId: 2,
+              nickname: '성진',
+              profileImage: {
+                url: 'https://api.nudge-community.com/attachments/7728799',
+              },
+            },
+            sentAt: '2025-02-02T10:39:29.950Z',
+          },
+        ],
+      });
+    }
+
+    return HttpResponse.json({
+      timeStamp: '2025-01-31T17:13:56.217Z',
+      code: '200',
+      message: 'Success',
+      result: [],
+    });
+  }),
 ];

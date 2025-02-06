@@ -8,3 +8,6 @@ export * from './useGetInitSingleChat';
 export * from './useGetUnreadSingleChat';
 export * from './useGetReadSingleChat';
 export * from './usePostGroupChat';
+export * from './useGetInitGroupChat';
+export * from './useGetUnreadGroupChat';
+export * from './useGetReadGroupChat';
