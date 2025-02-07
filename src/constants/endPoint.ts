@@ -85,6 +85,7 @@ export const endPoint = {
   // Chat API
   GET_GROUP_CHAT_INVITCODE: (groupChatId: number) => `/chat/group/invitation/${groupChatId}`,
   GET_GROUP_CHAT_INFO: (groupChatId: number) => `/chat/group/${groupChatId}`,
+  GET_JOIN_GROUP_CHAT: (uuid: string) => `/chat/group/${uuid}`,
   CREATE_GROUP_CHAT: '/chat/group/join',
   UPDATE_GROUP_CHAT: '/chat/group',
   DELETE_GROUP_CHAT: '/chat/group',

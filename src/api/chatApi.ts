@@ -1,6 +1,7 @@
 import { endPoint } from 'constants/endPoint';
 import type {
   ChatListResponse,
+  CreateGroupChatResponse,
   CreateSingleChatResponse,
   EnterGroupChatResponse,
   EnterSingleChatResponse,
@@ -68,8 +69,12 @@ export const requestGetUnreadSingleChat = async (singleChatId: number, criteriaN
 };
 
 // Group Chat Room
-export const requestPostJoinGroupChat = async (uuid: string) => {
-  return await tokenAxios.post<JoinGroupChatResponse>(endPoint.CREATE_GROUP_CHAT, {
+export const requestGetJoinGroupChat = async (uuid: string) => {
+  return await tokenAxios.get<JoinGroupChatResponse>(endPoint.GET_JOIN_GROUP_CHAT(uuid));
+};
+
+export const requestPostGroupChat = async (uuid: string) => {
+  return await tokenAxios.post<CreateGroupChatResponse>(endPoint.CREATE_GROUP_CHAT, {
     data: { uuid },
   });
 };

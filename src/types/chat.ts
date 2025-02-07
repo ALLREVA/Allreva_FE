@@ -61,7 +61,7 @@ export interface ChatInfo {
   otherMember?: MemberInfo;
 }
 
-// Edit Group Chat
+// edit group chat
 export interface GroupChatData {
   groupChatId: number;
   title: string;
@@ -69,7 +69,7 @@ export interface GroupChatData {
   imageFile: File;
 }
 
-// Single Chat Room
+// chat room
 export interface ChatMessage {
   messageNumber: number;
   content: {
@@ -102,6 +102,16 @@ export interface GroupChatParam {
   criteriaNumber: number;
 }
 
+// join group chat
+export interface JoinGroupChat {
+  title: string;
+  description: string;
+  headcount: number;
+  image: {
+    url: string;
+  };
+}
+
 export type ChatListResponse = ApiResponse<ChatList[]>;
 export type SingleChatInfoResponse = ApiResponse<SingleChatInfo>;
 export type GroupChatInfoResponse = ApiResponse<GroupChatInfo>;
@@ -111,7 +121,8 @@ export type EnterSingleChatResponse = ApiResponse<EnterChat>;
 export type ReadSingleChatResponse = ApiResponse<ChatMessage[]>;
 export type UnreadSingleChatResponse = ApiResponse<ChatMessage[]>;
 
-export type JoinGroupChatResponse = ApiResponse<number>;
+export type JoinGroupChatResponse = ApiResponse<JoinGroupChat>;
+export type CreateGroupChatResponse = ApiResponse<number>;
 export type EnterGroupChatResponse = ApiResponse<EnterChat>;
 export type ReadGroupChatResponse = ApiResponse<ChatMessage[]>;
 export type UnreadGroupChatResponse = ApiResponse<ChatMessage[]>;

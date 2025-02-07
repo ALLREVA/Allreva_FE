@@ -1390,4 +1390,24 @@ export const handlers = [
       result: [],
     });
   }),
+
+  // Join Group Chat
+  http.get(
+    `${API_URL}${endPoint.GET_JOIN_GROUP_CHAT('cfcb2583-4713-4418-91ee-93be8f624738')}`,
+    () => {
+      return HttpResponse.json({
+        timeStamp: '2025-01-31T17:13:56.217Z',
+        code: '200',
+        message: 'Success',
+        result: {
+          title: '데이식스 천안 차대절 🎸',
+          description: '데이식스 FOREVER YOUNG 천안 차대절 단체 채팅방 입니다!',
+          headcount: 5,
+          image: {
+            url: 'https://www.news1.kr/_next/image?url=https%3A%2F%2Fi3n.news1.kr%2Fsystem%2Fphotos%2F2024%2F3%2F15%2F6537495%2Fhigh.jpg&w=1920&q=75',
+          },
+        },
+      });
+    }
+  ),
 ];

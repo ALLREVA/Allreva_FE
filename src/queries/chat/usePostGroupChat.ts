@@ -1,9 +1,9 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { requestPostJoinGroupChat } from 'api';
+import { requestPostGroupChat } from 'api';
 
 const createGroupChat = async (uuid: string) => {
-  const { data } = await requestPostJoinGroupChat(uuid);
+  const { data } = await requestPostGroupChat(uuid);
   return data.result;
 };
 

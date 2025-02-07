@@ -11,3 +11,4 @@ export * from './usePostGroupChat';
 export * from './useGetInitGroupChat';
 export * from './useGetUnreadGroupChat';
 export * from './useGetReadGroupChat';
+export * from './useGetJoinGroupChat';
