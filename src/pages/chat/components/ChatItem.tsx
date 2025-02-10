@@ -6,10 +6,10 @@ import type { ChatInfoSummary, ChatPreviewMessage, ChatType } from 'types';
 import { formatCustomTime } from 'utils';
 
 interface ChatItemProps {
-  roomId: number;
+  chatId: number;
   chatType: ChatType;
   chatInfoSummary: ChatInfoSummary;
-  previewMessage: ChatPreviewMessage;
+  previewMessage: ChatPreviewMessage | null;
   lastReadMessageNumber: number;
 }
 
@@ -106,7 +106,7 @@ const BadgeContainer = styled.div<{ isVisible: boolean }>`
 `;
 
 const ChatItem = ({
-  roomId,
+  chatId,
   chatType,
   chatInfoSummary,
   previewMessage,
@@ -115,17 +115,17 @@ const ChatItem = ({
   const navigate = useNavigate();
 
   const { title, thumbnail, headcount } = chatInfoSummary;
-  const { previewMessageNumber, previewText, sentAt } = previewMessage;
+  const { previewMessageNumber = 0, previewText = '', sentAt = '' } = previewMessage || {};
 
   const chatCount = previewMessageNumber - lastReadMessageNumber;
 
   const handleChatClick = () => {
     if (chatType === 'GROUP') {
-      navigate(`/chat/group/${roomId}`, {
+      navigate(`/chat/group/${chatId}`, {
         state: { title, members: headcount, chatType },
       });
     } else {
-      navigate(`/chat/private/${roomId}`, {
+      navigate(`/chat/private/${chatId}`, {
         state: { title, members: headcount, chatType },
       });
     }
@@ -144,7 +144,7 @@ const ChatItem = ({
         <LastMessage>{previewText}</LastMessage>
       </ChatContent>
       <ChatDetailInfo>
-        <LastChatTime>{formatCustomTime(sentAt)}</LastChatTime>
+        <LastChatTime>{sentAt ? formatCustomTime(sentAt) : ''}</LastChatTime>
         <BadgeContainer isVisible={chatCount > 0}>
           <SmallText>{chatCount > 99 ? `99+` : `${chatCount}`}</SmallText>
         </BadgeContainer>

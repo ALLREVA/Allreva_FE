@@ -19,10 +19,10 @@ export interface ChatPreviewMessage {
 }
 
 export interface ChatList {
-  roomId: number;
+  chatId: number;
   chatType: ChatType;
   chatInfoSummary: ChatInfoSummary;
-  previewMessage: ChatPreviewMessage;
+  previewMessage: ChatPreviewMessage | null;
   lastReadMessageNumber: number;
 }
 

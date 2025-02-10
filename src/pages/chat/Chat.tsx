@@ -22,7 +22,7 @@ const Chat = () => {
 
   return (
     <ContentContainer>
-      <ChatList>{chatRooms?.map((data) => <ChatItem key={data.roomId} {...data} />)}</ChatList>
+      <ChatList>{chatRooms?.map((data) => <ChatItem key={data.chatId} {...data} />)}</ChatList>
     </ContentContainer>
   );
 };
