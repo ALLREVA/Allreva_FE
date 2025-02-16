@@ -1,6 +1,9 @@
 import { initializeApp } from 'firebase/app';
 import { getMessaging, getToken, onMessage } from 'firebase/messaging';
 
+import { endPoint } from 'constants/endPoint';
+import { publicAxios, tokenAxios } from 'utils/axios';
+
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_API_KEY,
   authDomain: 'allreva-86be8.firebaseapp.com',
@@ -41,12 +44,19 @@ export async function requestPermission() {
     vapidKey: import.meta.env.VITE_VAPID_KEY,
   });
 
-  if (token) console.log('token: ', token);
-  else console.log('token을 얻을 수 없습니다');
+  if (token) {
+    console.log('token: ', token);
+
+    try {
+      await tokenAxios.post(endPoint.NOTIFICATION_TOKEN, { deviceToken: token });
+    } catch (error) {
+      console.error('토큰 전송에 실패했습니다', error);
+    }
+  } else {
+    console.log('token을 얻을 수 없습니다');
+  }
 
   onMessage(messaging, (payload) => {
     console.log('메시지가 도착했습니다.', payload);
   });
 }
-
-void requestPermission();
