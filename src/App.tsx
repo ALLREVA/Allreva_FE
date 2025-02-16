@@ -17,8 +17,6 @@ function App() {
   useScreenSize();
 
   useEffect(() => {
-    void requestPermission();
-
     if (isLoggedIn) {
       const fetchLoginCheck = async () => {
         try {
@@ -26,6 +24,8 @@ function App() {
 
           const newToken: string = response.headers['authorization'];
           authStore.getState().setToken(newToken);
+
+          void requestPermission();
         } catch (error) {
           console.error('새로고침시 data 요청 에러', error);
         }
