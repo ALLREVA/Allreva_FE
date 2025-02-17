@@ -3,7 +3,8 @@ import { TbBell } from 'react-icons/tb';
 
 import type { Notification } from '../Notification';
 
-import { BodyRegularText, TitleText2 } from 'styles/Typography';
+import { BodyRegularText, ChipText, TitleText2 } from 'styles/Typography';
+import { formatFromNowDate } from 'utils';
 
 interface NotificationItemProps {
   notification: Notification;
@@ -18,6 +19,7 @@ const NotificationItem = ({ notification }: NotificationItemProps) => {
       <ContentWrapper>
         <TitleText2>{notification.title}</TitleText2>
         <BodyRegularText>{notification.message}</BodyRegularText>
+        <ChipText>{formatFromNowDate(notification.createdAt)}</ChipText>
       </ContentWrapper>
     </NotificationItemContainer>
   );

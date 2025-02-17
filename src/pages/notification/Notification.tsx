@@ -35,7 +35,7 @@ const Notification = () => {
     queryKey: ['notifications'],
     queryFn: () => getNotification(),
   });
-
+  console.log(data);
   return (
     <NotificationContainer>
       {data?.map((item) => <NotificationItem key={item.id} notification={item} />)}
