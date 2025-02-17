@@ -48,7 +48,7 @@ export async function requestPermission() {
     console.log('token: ', token);
 
     try {
-      await tokenAxios.post(endPoint.NOTIFICATION_TOKEN, { deviceToken: token });
+      await tokenAxios.post(endPoint.GET_NOTIFICATION_TOKEN, { deviceToken: token });
     } catch (error) {
       console.error('토큰 전송에 실패했습니다', error);
     }

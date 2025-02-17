@@ -71,5 +71,6 @@ export const endPoint = {
   DELETE_CONCERT_RECORD: (diaryId: string) => `/diaries/${diaryId}`,
 
   // Alarm
-  NOTIFICATION_TOKEN: '/notifications/device-token',
+  GET_NOTIFICATION_TOKEN: '/notifications/device-token',
+  GET_NOTIFICATIONS: '/notifications',
 };
