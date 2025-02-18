@@ -2,7 +2,7 @@ import { initializeApp } from 'firebase/app';
 import { getMessaging, getToken, onMessage } from 'firebase/messaging';
 
 import { endPoint } from 'constants/endPoint';
-import { publicAxios, tokenAxios } from 'utils/axios';
+import { tokenAxios } from 'utils/axios';
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_API_KEY,

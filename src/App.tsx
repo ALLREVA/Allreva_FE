@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Suspense, useEffect } from 'react';
 import { RouterProvider } from 'react-router-dom';
 
-import { requestPermission } from './firebase-messaging-sw';
+import { requestPermission } from '../src/firebase-messaging-sw';
 
 import { endPoint } from 'constants/endPoint';
 import { useScreenSize } from 'hooks';
