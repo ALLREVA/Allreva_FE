@@ -2,6 +2,8 @@ import styled from '@emotion/styled';
 import { Suspense, useEffect } from 'react';
 import { RouterProvider } from 'react-router-dom';
 
+import { requestPermission } from '../src/firebase-messaging-sw';
+
 import { endPoint } from 'constants/endPoint';
 import { useScreenSize } from 'hooks';
 import { router } from 'routes/routes';
@@ -22,6 +24,8 @@ function App() {
 
           const newToken: string = response.headers['authorization'];
           authStore.getState().setToken(newToken);
+
+          void requestPermission();
         } catch (error) {
           console.error('새로고침시 data 요청 에러', error);
         }

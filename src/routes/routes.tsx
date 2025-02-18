@@ -8,6 +8,7 @@ import { AuthHeaderLayout, AuthTitleHeaderLayout, PublicOnlyLayout } from 'layou
 import SearchLayout from 'layout/SearchLayout';
 import Callback from 'pages/callback/Callback';
 import ConcertHallsList from 'pages/concertHallsList/ConcertHallsList';
+import Notification from 'pages/notification/Notification';
 import Search from 'pages/search/Search';
 import SearchMoreConcerts from 'pages/searchMore/SearchMoreConcerts';
 import SearchMoreRents from 'pages/searchMore/SearchMoreRents';
@@ -204,6 +205,11 @@ export const router = createBrowserRouter([
             path: '/concert-record/edit/:id',
             element: <CreateConcertRecord type="edit" />,
             handle: { title: '공연 기록 수정' },
+          },
+          {
+            path: '/notifications',
+            element: <Notification />,
+            handle: { title: '알림' },
           },
         ],
       },

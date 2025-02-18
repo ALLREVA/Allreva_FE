@@ -71,4 +71,9 @@ export const endPoint = {
   CREATE_CONCERT_RECORD: '/diaries',
   UPDATE_CONCERT_RECORD: '/diaries',
   DELETE_CONCERT_RECORD: (diaryId: string) => `/diaries/${diaryId}`,
+
+  // Alarm
+  GET_NOTIFICATION_TOKEN: '/notifications/device-token',
+  GET_NOTIFICATIONS: '/notifications',
+  PATCH_NOTIFICATION_READ: '/notifications/read',
 };

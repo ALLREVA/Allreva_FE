@@ -1,6 +1,8 @@
 import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/ko';
 
+dayjs.extend(relativeTime);
 dayjs.locale('ko');
 
 // D-Day 계산
@@ -71,4 +73,9 @@ export const getYearAndMonth = (date: string) => {
 export const formatDotDate = (dateString: string) => {
   const date = dayjs(dateString);
   return `${date.format('YYYY.MM.DD')}`;
+};
+
+// YYYY.MM.DD -> (오늘 날짜 기준) nd일전 형식으로 변환
+export const formatFromNowDate = (date: string) => {
+  return dayjs(date).fromNow();
 };
