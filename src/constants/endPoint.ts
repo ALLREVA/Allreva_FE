@@ -73,4 +73,5 @@ export const endPoint = {
   // Alarm
   GET_NOTIFICATION_TOKEN: '/notifications/device-token',
   GET_NOTIFICATIONS: '/notifications',
+  PATCH_NOTIFICATION_READ: '/notifications/read',
 };
