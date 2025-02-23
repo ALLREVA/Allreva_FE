@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { LuAlertCircle } from 'react-icons/lu';
+import { LuCircleAlert } from 'react-icons/lu';
 import { PiSignOutBold } from 'react-icons/pi';
 import { TbChevronLeft, TbSettings } from 'react-icons/tb';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -155,7 +155,7 @@ const ChatDrawer = ({ toggleDrawer, chatType }: ChatDrawerProps) => {
     ) {
       addToast(
         TOAST_MESSAGES.PREVENT_EXIT_CHAT,
-        <LuAlertCircle size={16} style={{ flexShrink: 0, color: '#FF595E' }} />
+        <LuCircleAlert size={16} style={{ flexShrink: 0, color: '#FF595E' }} />
       );
     } else {
       openModal(

@@ -18,12 +18,32 @@ export interface ChatPreviewMessage {
   sentAt: string;
 }
 
-export interface ChatList {
+export interface ChatListItem {
   chatId: number;
   chatType: ChatType;
   chatInfoSummary: ChatInfoSummary;
   previewMessage: ChatPreviewMessage | null;
   lastReadMessageNumber: number;
+}
+
+export interface NewChatPreviewMessage {
+  messageId: number;
+  content: string;
+  timestamp: string;
+  sender: {
+    id: number;
+    name: string;
+  };
+}
+
+export interface NewChatListItem {
+  chatId: number;
+  chatType: ChatType;
+  previewMessage: NewChatPreviewMessage;
+}
+
+export interface SSEMessage {
+  previewMessageResponse: NewChatListItem;
 }
 
 // chat info
@@ -70,12 +90,14 @@ export interface GroupChatData {
 }
 
 // chat room
+export interface MessageContent {
+  contentType: MessageType;
+  payload: string;
+}
+
 export interface ChatMessage {
   messageNumber: number;
-  content: {
-    contentType: MessageType;
-    payload: string;
-  };
+  content: MessageContent;
   sender: {
     memberId: number;
     nickname: string;
@@ -112,7 +134,7 @@ export interface JoinGroupChat {
   };
 }
 
-export type ChatListResponse = ApiResponse<ChatList[]>;
+export type ChatListResponse = ApiResponse<ChatListItem[]>;
 export type SingleChatInfoResponse = ApiResponse<SingleChatInfo>;
 export type GroupChatInfoResponse = ApiResponse<GroupChatInfo>;
 

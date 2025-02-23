@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { requestGetChatList } from 'api';
-import type { ChatList } from 'types';
+import type { ChatListItem } from 'types';
 
 export const useGetChatList = () => {
   const fetchChatList = async () => {
@@ -9,7 +9,7 @@ export const useGetChatList = () => {
     return data.result;
   };
 
-  return useQuery<ChatList[]>({
+  return useQuery<ChatListItem[]>({
     queryKey: ['chatList'],
     queryFn: fetchChatList,
   });

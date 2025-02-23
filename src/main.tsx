@@ -15,25 +15,11 @@ const queryClient = new QueryClient({
   },
 });
 
-async function enableMocking() {
-  if (import.meta.env.MODE !== 'development') return;
-
-  const { worker } = await import('./mocks/browser');
-
-  return worker.start();
-}
-
-enableMocking()
-  .then(() => {
-    createRoot(document.getElementById('root')!).render(
-      <QueryClientProvider client={queryClient}>
-        <ThemeProvider theme={theme}>
-          <App />
-        </ThemeProvider>
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
-    );
-  })
-  .catch((error) => {
-    console.error('Error enabling mocking:', error);
-  });
+createRoot(document.getElementById('root')!).render(
+  <QueryClientProvider client={queryClient}>
+    <ThemeProvider theme={theme}>
+      <App />
+    </ThemeProvider>
+    <ReactQueryDevtools initialIsOpen={false} />
+  </QueryClientProvider>
+);

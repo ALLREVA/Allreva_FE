@@ -1,6 +1,8 @@
 import { isAxiosError } from 'axios';
 import { useEffect } from 'react';
 
+import { useSSE } from './useSSE';
+
 import { endPoint } from 'constants/endPoint';
 import { requestPermission } from 'firebase-messaging-sw';
 import { useAuthStore } from 'stores';
@@ -12,6 +14,7 @@ export const useLoginCheck = () => {
     'setToken',
     'setUserProfile',
   ]);
+  const { subscribeSSE } = useSSE();
 
   useEffect(() => {
     const fetchLoginCheck = async () => {
@@ -27,6 +30,8 @@ export const useLoginCheck = () => {
           nickname: response.data.result.nickname,
           profileImageUrl: response.data.result.profileImageUrl,
         });
+
+        subscribeSSE(newToken);
 
         void requestPermission();
       } catch (error) {

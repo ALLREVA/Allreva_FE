@@ -102,9 +102,8 @@ export const endPoint = {
   GET_SINGLE_CHAT_UNREAD_MESSAGES: '/message/single/unread',
 
   GET_CHAT_LIST: '/chat/list',
-  SINGLE_CHAT_SSE: (chatId: number) => `/chat/single/stream/${chatId}`,
-  GROUP_CHAT_SSE: (groupChatId: number) => `/chat/group/stream/${groupChatId}`,
+  CHAT_SSE: `/chat/stream`,
 
-  GROUP_CHAT_WS: (groupChatId: number) => `/group/connection/${groupChatId}`,
-  SINGLE_CHAT_WS: (singleChatId: number) => `/single/connection/${singleChatId}`,
+  GROUP_CHAT_WS: (groupChatId: string) => `/group/connection/${groupChatId}`,
+  SINGLE_CHAT_WS: (singleChatId: string) => `/single/connection/${singleChatId}`,
 };
