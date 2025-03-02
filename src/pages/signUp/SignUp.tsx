@@ -9,8 +9,9 @@ import ShortBio from './components/ShortBio';
 
 import AvatarUploader from 'components/avatarUploader/AvatarUploader';
 import BaseButton from 'components/buttons/BaseButton';
-import { endPoint } from 'constants/endPoint';
-import { tokenAxios } from 'utils/axios';
+import { usePostSignUp } from 'queries/auth';
+import { usePostPresigned } from 'queries/presigned';
+import type { LoginProvider } from 'types';
 
 interface ArtistRequest {
   spotifyArtistId: string;
@@ -21,15 +22,19 @@ interface SignUpFormData {
   email: string;
   nickname: string;
   introduce: string;
-  loginProvider: string;
+  loginProvider: LoginProvider;
   imageUrl: string;
   imageFile?: File;
   memberArtistRequests?: ArtistRequest[];
 }
+
 const SignUp = () => {
   const location = useLocation();
   const userData = location.state;
   const navigate = useNavigate();
+
+  const { mutateAsync: presignedMutate } = usePostPresigned();
+  const { mutate: signUpMutate } = usePostSignUp();
 
   const methods = useForm<SignUpFormData>({
     defaultValues: {
@@ -48,35 +53,26 @@ const SignUp = () => {
 
   const handleSubmit = methods.handleSubmit(async (data) => {
     try {
-      const formData = new FormData();
+      const { email, nickname, imageFile, imageUrl, introduce, loginProvider } = data;
 
-      const memberRegisterRequest = {
-        email: data.email,
-        nickname: data.nickname,
-        introduce: null,
-        loginProvider: 'KAKAO' as const,
-        memberArtistRequests: [
-          {
-            spotifyArtistId: 'string',
-            name: 'string',
-          },
-        ],
+      let profileUrl = imageUrl;
+
+      if (imageFile) {
+        profileUrl = await presignedMutate({ file: imageFile, fileType: 'PROFILE' });
+      }
+
+      const registerData = {
+        email,
+        nickname,
+        introduce,
+        loginProvider,
+        memberArtistRequests: [{ spotifyArtistId: '', name: '' }],
+        image: { url: profileUrl },
       };
 
-      formData.append('memberRegisterRequest', JSON.stringify(memberRegisterRequest));
-
-      if (data.imageFile) {
-        formData.append('image', data.imageFile);
-      }
-
-      const response = await tokenAxios.post(endPoint.SIGNUP, formData);
-
-      if (response.status === 200) {
-        navigate(endPoint.SIGNIN);
-      }
-    } catch (e) {
-      console.error(e);
-      alert('회원가입에 실패했습니다');
+      signUpMutate(registerData, { onSuccess: () => navigate('/signin') });
+    } catch (error) {
+      console.error('회원가입 실패:', error);
     }
   });
 

@@ -6,3 +6,5 @@ export * from './searchApi';
 export * from './userApi';
 export * from './concertRecordApi';
 export * from './concertHallApi';
+export * from './presignedApi';
+export * from './authApi';
