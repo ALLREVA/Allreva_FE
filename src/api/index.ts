@@ -8,3 +8,5 @@ export * from './concertHallApi';
 export * from './presignedApi';
 export * from './authApi';
 export * from './chatApi';
+export * from './presignedApi';
+export * from './authApi';

@@ -10,3 +10,4 @@ export * from './concertRecord';
 export * from './concertHall';
 export * from './presigned';
 export * from './chat';
+export * from './presigned';

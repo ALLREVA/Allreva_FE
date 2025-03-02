@@ -106,4 +106,8 @@ export const endPoint = {
 
   GROUP_CHAT_WS: (groupChatId: string) => `/group/connection/${groupChatId}`,
   SINGLE_CHAT_WS: (singleChatId: string) => `/single/connection/${singleChatId}`,
+
+  // Presigned API
+  UPDATE_PRESIGNED_URL: '/file/presigned-url',
+  DELETE_PRESIGNED_URL: '/file/presigned-url',
 };
