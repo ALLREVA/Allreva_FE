@@ -8,3 +8,4 @@ export * from './filter';
 export * from './search';
 export * from './concertRecord';
 export * from './concertHall';
+export * from './presigned';

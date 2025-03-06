@@ -1,7 +1,15 @@
 import type { ApiResponse } from './api';
+
+export type LoginProvider = 'KAKAO';
+
 interface Artist {
   name: string;
   artistId: string;
+}
+
+interface FavoriteArtist {
+  spotifyArtistId: string;
+  name: string;
 }
 
 export interface UserInfo {
@@ -18,6 +26,19 @@ export interface BankAccount {
   bank: string;
   number: string;
 }
+
+// SignUp
+export interface MemberRegister {
+  email: string;
+  nickname: string;
+  introduce: string | null;
+  loginProvider: LoginProvider;
+  memberArtistRequests: FavoriteArtist[];
+  image: {
+    url: string;
+  };
+}
+
 export type RefundAccountForm = BankAccount;
 
 export type UserInfoResponse = ApiResponse<UserInfo>;

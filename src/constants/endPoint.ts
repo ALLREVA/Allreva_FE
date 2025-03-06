@@ -76,4 +76,8 @@ export const endPoint = {
   GET_NOTIFICATION_TOKEN: '/notifications/device-token',
   GET_NOTIFICATIONS: '/notifications',
   PATCH_NOTIFICATION_READ: '/notifications/read',
+
+  // Presigned API
+  UPDATE_PRESIGNED_URL: '/file/presigned-url',
+  DELETE_PRESIGNED_URL: '/file/presigned-url',
 };
