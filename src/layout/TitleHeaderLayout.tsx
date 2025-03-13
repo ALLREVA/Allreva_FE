@@ -30,4 +30,5 @@ const MainWrapper = styled.main<{ isTransparent?: boolean }>`
   flex-direction: column;
   padding-top: ${({ isTransparent }) => (isTransparent ? '0' : '5.2rem')};
   min-height: 100vh;
+  height: 100%;
 `;

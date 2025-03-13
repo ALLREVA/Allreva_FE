@@ -29,5 +29,10 @@ const HeaderWrapper = styled.header`
 
 const MainWrapper = styled.main`
   padding: 5.2rem 0 5.8rem;
+
   min-width: 32rem;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  height: 100%;
 `;
