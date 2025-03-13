@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { useQueryErrorResetBoundary } from '@tanstack/react-query';
 import type { FallbackProps } from 'react-error-boundary';
 
-const FetchErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => {
+export const FetchErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => {
   const { reset } = useQueryErrorResetBoundary();
 
   const handleClickReset = () => {
@@ -46,5 +46,3 @@ const RetryButton = styled.button`
     background-color: #b91c1c;
   }
 `;
-
-export default FetchErrorFallback;
