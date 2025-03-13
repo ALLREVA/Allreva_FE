@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
+import { debounce } from 'lodash-es';
 import type React from 'react';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { FaCircleXmark } from 'react-icons/fa6';
 import { IoSearch } from 'react-icons/io5';
 
@@ -16,21 +17,33 @@ interface SearchInputProps {
 const SearchInput = ({ text, isActive, onSearch, onValueChange, onClear }: SearchInputProps) => {
   const [searchValue, setSearchValue] = useState('');
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(e.target.value);
-    onValueChange?.();
-  };
+  const debouncedSearch = useCallback(
+    debounce((value: string) => {
+      if (value.trim()) {
+        onSearch(value);
+      }
+    }, 500),
+    [onSearch]
+  );
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && searchValue.trim()) {
-      onSearch(searchValue);
-    }
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchValue(value);
+    onValueChange?.();
+    debouncedSearch(value);
   };
 
   const handleClearValue = () => {
     setSearchValue('');
+    debouncedSearch.cancel();
     onClear?.();
   };
+
+  useEffect(() => {
+    return () => {
+      debouncedSearch.cancel();
+    };
+  }, [debouncedSearch]);
 
   return (
     <SearchInputContainer isActive={isActive}>
@@ -38,7 +51,6 @@ const SearchInput = ({ text, isActive, onSearch, onValueChange, onClear }: Searc
       <Input
         hasValue={!!searchValue}
         onChange={handleChange}
-        onKeyDown={handleKeyDown}
         placeholder={text}
         type="search"
         value={isActive ? searchValue : ''}

@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import Magnifier from 'assets/images/magnifier-icon.svg?react';
 import BottomSheet from 'components/bottomSheet/BottomSheet';
@@ -15,6 +15,7 @@ import type { ConcertData } from 'types';
 interface SearchConcertSheetProps {
   isPastSearch?: boolean;
   onConcertSelect?: (data: ConcertData) => void;
+  filterFn?: (concert: ConcertData) => boolean;
 }
 
 const SheetContainer = styled.div`
@@ -23,12 +24,12 @@ const SheetContainer = styled.div`
   gap: 1.6rem;
 `;
 
-const SearchResultContainer = styled.div<{ isError: boolean }>`
+const SearchResultContainer = styled.div<{ isEmpty: boolean }>`
   display: flex;
   flex-direction: column;
-  justify-content: ${({ isError }) => (isError ? 'center' : 'flex-start')};
-  align-items: ${({ isError }) => (isError ? 'center' : 'flex-start')};
-  gap: ${({ isError }) => (isError ? '2.4rem' : '0')};
+  justify-content: ${({ isEmpty }) => (isEmpty ? 'center' : 'flex-start')};
+  align-items: ${({ isEmpty }) => (isEmpty ? 'center' : 'flex-start')};
+  gap: ${({ isEmpty }) => (isEmpty ? '2.4rem' : '0')};
   min-height: 32rem;
 `;
 
@@ -47,7 +48,11 @@ const SearchConcertList = styled.ul`
   list-style: none;
 `;
 
-const SearchConcertSheet = ({ isPastSearch = false, onConcertSelect }: SearchConcertSheetProps) => {
+const SearchConcertSheet = ({
+  isPastSearch = false,
+  onConcertSelect,
+  filterFn,
+}: SearchConcertSheetProps) => {
   const { closeModal } = useModalStore(['closeModal']);
   const [searches, setSearches] = useState<string | null>('');
   const {
@@ -57,6 +62,16 @@ const SearchConcertSheet = ({ isPastSearch = false, onConcertSelect }: SearchCon
     isFetchingNextPage,
     isError,
   } = useGetSearchConcert(searches, isPastSearch);
+
+  const filteredConcerts = useMemo(() => {
+    if (!concerts?.pages) return [];
+
+    if (filterFn) {
+      return concerts.pages.flatMap((page) => page.concertThumbnails).filter(filterFn);
+    } else {
+      return concerts.pages.flatMap((page) => page.concertThumbnails);
+    }
+  }, [concerts?.pages, filterFn]);
 
   const targetRef = useIntersectionObserver(() => {
     if (hasNextPage && !isFetchingNextPage) void fetchNextPage();
@@ -69,6 +84,49 @@ const SearchConcertSheet = ({ isPastSearch = false, onConcertSelect }: SearchCon
 
   const handleSearchClear = () => setSearches('');
 
+  const isEmpty = isError || filteredConcerts.length === 0;
+
+  const renderContent = () => {
+    if (isEmpty) {
+      return (
+        <>
+          <SearchIcon />
+          <EmptyText>
+            {isError
+              ? `검색 결과가 없습니다. \n 정확한 공연명을 입력해주세요.`
+              : '해당 공연장에서 진행된 공연이 아니에요!'}
+          </EmptyText>
+        </>
+      );
+    }
+
+    return filterFn ? (
+      // 필터링된 콘서트 목록 렌더링
+      <SearchConcertList>
+        {filteredConcerts.map((concert) => (
+          <SearchConcertItem
+            concertData={concert}
+            key={concert.id}
+            onClick={(data) => handleConcertSelect(data)}
+          />
+        ))}
+      </SearchConcertList>
+    ) : (
+      // 원본 페이지 구조 그대로 렌더링
+      concerts?.pages.map((page, pageIdx) => (
+        <SearchConcertList key={pageIdx}>
+          {page.concertThumbnails.map((concert) => (
+            <SearchConcertItem
+              concertData={concert}
+              key={concert.id}
+              onClick={(data) => handleConcertSelect(data)}
+            />
+          ))}
+        </SearchConcertList>
+      ))
+    );
+  };
+
   return (
     <BottomSheet name="list">
       <BottomSheet.Content>
@@ -80,25 +138,8 @@ const SearchConcertSheet = ({ isPastSearch = false, onConcertSelect }: SearchCon
             onValueChange={() => setSearches(null)}
             text={SEARCH_PLACEHOLDER.concert}
           />
-          <SearchResultContainer isError={isError}>
-            {isError ? (
-              <>
-                <SearchIcon />
-                <EmptyText>{`검색 결과가 없습니다. \n 정확한 공연명을 입력해주세요.`}</EmptyText>
-              </>
-            ) : (
-              concerts?.pages.map((page, pageIdx) => (
-                <SearchConcertList key={pageIdx}>
-                  {page.concertThumbnails.map((concert) => (
-                    <SearchConcertItem
-                      concertData={concert}
-                      key={concert.id}
-                      onClick={(data) => handleConcertSelect(data)}
-                    />
-                  ))}
-                </SearchConcertList>
-              ))
-            )}
+          <SearchResultContainer isEmpty={isEmpty}>
+            {renderContent()}
             <div ref={targetRef} />
           </SearchResultContainer>
         </SheetContainer>
