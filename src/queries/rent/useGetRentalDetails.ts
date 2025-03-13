@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { requestGetDepositAccount, requestGetRentalDetails } from 'api';
 import { useAuthStore } from 'stores';
@@ -24,9 +24,8 @@ export const useGetRentalDetails = (id: string) => {
     return { ...rentalDetails, depositAccount };
   };
 
-  return useQuery<AllRentalDetail>({
+  return useSuspenseQuery<AllRentalDetail>({
     queryKey: ['rentalDetail', id],
     queryFn: fetchDetailsWithAuth,
-    enabled: !!id,
   });
 };

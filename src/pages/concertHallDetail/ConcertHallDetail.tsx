@@ -4,12 +4,13 @@ import { BiBus, BiCoffeeTogo } from 'react-icons/bi';
 import { IoRestaurantOutline } from 'react-icons/io5';
 import { MdOutlineStoreMallDirectory } from 'react-icons/md';
 import { TbDisabled } from 'react-icons/tb';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import ConcertHallMap from './components/ConcertHallMap';
 import RelatedConcert from './components/RelatedConcert';
 import SeatReview from './components/SeatReview';
 
+import { FetchErrorBoundary } from 'components/boundary';
 import BaseButton from 'components/buttons/BaseButton';
 import Rating from 'components/rating/Rating';
 import TabBar from 'components/tabBar/TabBar';
@@ -100,10 +101,10 @@ const TabContent = styled.div`
 `;
 
 const BottomButtonWrapper = styled.div`
-  position: sticky;
+  position: fixed;
   bottom: 0;
-  left: 0;
   width: 100%;
+  max-width: ${({ theme }) => theme.maxWidth};
   padding: 2.4rem;
   background-color: ${({ theme }) => theme.colors.black};
 `;
@@ -131,6 +132,17 @@ const DISABLED_FACILITIES = (convenienceInfo: ConvenienceInfo) => [
 ];
 
 const ConcertHallDetail = () => {
+  return (
+    <DetailContainer>
+      <FetchErrorBoundary>
+        <ConcertHallDetailContent />
+      </FetchErrorBoundary>
+    </DetailContainer>
+  );
+};
+
+const ConcertHallDetailContent = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const { isLoggedIn } = useAuthStore(['isLoggedIn']);
   const { data } = useGetConcertHallDetail(id as string);
@@ -151,8 +163,13 @@ const ConcertHallDetail = () => {
     setActiveTab(tab);
   };
 
+  const reviewClickHandler = () => {
+    if (!isLoggedIn) navigate('/signin');
+    else navigate(`/concert-halls/${id}/seat-review/create`);
+  };
+
   return (
-    <DetailContainer>
+    <>
       <ConcertHallMap latitude={location.latitude} longitude={location.longitude} />
       <ContentContainer>
         <HallName>{name}</HallName>
@@ -191,17 +208,11 @@ const ConcertHallDetail = () => {
         {activeTab === '관련 공연' && <RelatedConcert hallCode={id as string} />}
       </TabContent>
       <BottomButtonWrapper>
-        <BaseButton
-          color="primary"
-          isDisabled={!isLoggedIn}
-          onClick={() => {}}
-          size="medium"
-          variant="fill"
-        >
+        <BaseButton color="primary" onClick={reviewClickHandler} size="medium" variant="fill">
           {isLoggedIn ? '리뷰 작성' : '로그인 후 리뷰 작성'}
         </BaseButton>
       </BottomButtonWrapper>
-    </DetailContainer>
+    </>
   );
 };
 
