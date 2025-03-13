@@ -84,13 +84,6 @@ const Concert = () => {
         )}
       </ConcertList>
       <div ref={targetRef} />
-      <FloatingAside>
-        <FloatingButton>
-          <IconButton isDisabled={false} size="medium">
-            <PiPencilSimpleLineBold size={20} />
-          </IconButton>
-        </FloatingButton>
-      </FloatingAside>
     </ConcertContainer>
   );
 };
@@ -118,21 +111,6 @@ const ExpectedConcert = styled.div`
 const ConcertList = styled.div`
   width: 100%;
   padding: 2.4rem;
-`;
-
-const FloatingAside = styled.aside`
-  max-width: ${({ theme }) => theme.maxWidth};
-  margin: 0 auto;
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-`;
-
-const FloatingButton = styled.div`
-  position: absolute;
-  bottom: 8rem;
-  right: 2rem;
 `;
 
 export default Concert;
