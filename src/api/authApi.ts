@@ -1,5 +1,5 @@
 import { endPoint } from 'constants/endPoint';
-import type { MemberRegister } from 'types';
+import type { ProfileSchemaType as MemberRegister } from 'schemas';
 import { tokenAxios } from 'utils';
 
 export const requestPostSignUp = async (data: MemberRegister) => {
