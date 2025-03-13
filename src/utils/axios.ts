@@ -58,14 +58,12 @@ tokenAxios.interceptors.response.use(
               headers: { 'Content-Type': 'application/json' },
             });
 
-            const newToken = response.headers['authorization'];
+            const newToken = response.headers['authorization'] as string;
 
-            const validToken: string = newToken.replace('Bearer ', '');
-
-            authStore.getState().setToken(validToken);
+            authStore.getState().setToken(newToken);
 
             const newConfig = { ...config };
-            newConfig.headers.Authorization = `Bearer ${validToken}`;
+            newConfig.headers.Authorization = newToken;
 
             return tokenAxios(newConfig);
           } catch (error) {
@@ -79,7 +77,7 @@ tokenAxios.interceptors.response.use(
           return new Promise((resolve) => {
             addRefreshSubscriber((token: string) => {
               const newConfig = { ...config };
-              newConfig.headers.Authorization = `Bearer ${token}`;
+              newConfig.headers.Authorization = token;
 
               resolve(tokenAxios(newConfig));
             });

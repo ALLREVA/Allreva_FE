@@ -3,9 +3,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 
-import { createRefundAccount } from 'api';
 import BottomSheet from 'components/bottomSheet/BottomSheet';
 import BaseButton from 'components/buttons/BaseButton';
+import { useRefundAccount } from 'queries/user/useRefundAccount';
 import type { RefundAccountSchemaType } from 'schemas';
 import { refundAccountSchema } from 'schemas';
 import { useModalStore } from 'stores';
@@ -32,14 +32,12 @@ const RefundBottomSheet = ({ accountInfo }: RefundBottomSheetProps) => {
     mode: 'onChange',
   });
 
-  const onSubmit = async (data: RefundAccountSchemaType) => {
-    try {
-      const response = await createRefundAccount(data);
-      console.log('Submitting:', response);
-    } catch (err) {
-      console.error('Failed to save account info:', err);
-    }
-    closeModal('bottomSheet', 'refundAccount');
+  const mutation = useRefundAccount({
+    onSuccess: () => closeModal('bottomSheet', 'refundAccount'),
+  });
+
+  const onSubmit = (data: RefundAccountSchemaType) => {
+    mutation.mutate(data);
   };
 
   return (

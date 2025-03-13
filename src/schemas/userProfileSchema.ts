@@ -16,7 +16,9 @@ export const userProfileSchema = z.object({
   introduce: z.string().max(100, { message: '한줄소개는 100자 이내로 입력해주세요' }).nullable(),
   loginProvider: z.literal('KAKAO'),
   memberArtistRequests: z.array(artistRequestSchema),
-  imageFile: z.instanceof(File).optional(),
+  image: z.object({
+    url: z.string(),
+  }),
 });
 
 export type ProfileSchemaType = z.infer<typeof userProfileSchema>;

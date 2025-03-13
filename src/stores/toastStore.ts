@@ -34,7 +34,7 @@ const toastStore = createWithEqualityFn(
               state.toast = null;
             }
           });
-        }, 2000);
+        }, 3000);
       });
     },
   }))

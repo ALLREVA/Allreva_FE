@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { PiMapPinFill } from 'react-icons/pi';
 import { TbArmchair, TbCheck } from 'react-icons/tb';
+import { Link } from 'react-router-dom';
 
 import type { ConcertHalls } from '../type';
 
@@ -54,11 +55,13 @@ const ConcertHallItem = ({ concertHall }: ConcertHallItemProps) => {
           <CaptionText>{conveniences}</CaptionText>
         </Facilities>
       </DetailInfo>
+      <ConcertItemLink to={`/concert-halls/${concertHall.id}`} />
     </Container>
   );
 };
 
 const Container = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
@@ -105,6 +108,15 @@ const DetailInfo = styled.div`
   svg {
     flex-shrink: 0;
   }
+`;
+
+const ConcertItemLink = styled(Link)`
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
 `;
 
 export default ConcertHallItem;

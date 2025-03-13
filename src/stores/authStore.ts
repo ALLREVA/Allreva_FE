@@ -21,6 +21,7 @@ type AuthActions = {
   setIsLoggedIn: () => void;
   setUserProfile: (profile: UserProfile) => void;
   setToken: (token: string | null) => void;
+  clearAuthState: () => void;
 };
 
 type AuthStore = AuthState & AuthActions;
@@ -33,33 +34,25 @@ const initialState: AuthState = {
 
 export const authStore = createWithEqualityFn(
   devtools(
-    persist(
-      immer<AuthStore>((set) => ({
-        ...initialState,
-        setIsLoggedIn: () => {
-          set((state) => {
-            state.isLoggedIn = true;
-          });
-        },
-        setUserProfile: (profile) => {
-          set((state) => {
-            state.userProfile = profile;
-          });
-        },
-        setToken: (token) => {
-          set((state) => {
-            state.token = token;
-          });
-        },
-      })),
-      {
-        name: 'userInfo',
-        partialize: (state) => ({
-          isLoggedIn: state.isLoggedIn,
-          userProfile: state.userProfile,
-        }),
-      }
-    )
+    immer<AuthStore>((set) => ({
+      ...initialState,
+      setIsLoggedIn: () => {
+        set((state) => {
+          state.isLoggedIn = true;
+        });
+      },
+      setUserProfile: (profile) => {
+        set((state) => {
+          state.userProfile = profile;
+        });
+      },
+      setToken: (token) => {
+        set((state) => {
+          state.token = token;
+        });
+      },
+      clearAuthState: () => set(initialState),
+    }))
   )
 );
 

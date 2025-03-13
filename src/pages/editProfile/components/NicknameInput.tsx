@@ -10,7 +10,6 @@ export const NicknameInput = () => {
   const {
     control,
     setError,
-    clearErrors,
     formState: { errors },
   } = useFormContext<ProfileSchemaType>();
   const [isChecking, setIsChecking] = useState(false);
@@ -27,7 +26,6 @@ export const NicknameInput = () => {
     try {
       setIsChecking(true);
       const { data } = await checkNickName(value);
-      console.log(data);
     } catch (error) {
       setError('nickname', {
         type: 'error',

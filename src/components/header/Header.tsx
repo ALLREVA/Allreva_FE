@@ -22,17 +22,17 @@ const Header = () => {
         <StyledLink to="/search">
           <IoSearch size={24} />
         </StyledLink>
-        {isLoggedIn && userProfile ? (
+        {isLoggedIn ? (
           <UserProfileWrapper>
             <ProfileLink to="/mypage">
-              {userProfile.profileImageUrl ? (
-                <ProfileImage alt="프로필 이미지" src={userProfile.profileImageUrl} />
+              {userProfile?.profileImageUrl ? (
+                <ProfileImage alt="프로필 이미지" src={userProfile?.profileImageUrl} />
               ) : (
                 <DefaultProfileIcon>
                   <FaUser size={16} />
                 </DefaultProfileIcon>
               )}
-              <CaptionText>{userProfile.nickname}</CaptionText>
+              <CaptionText>{userProfile?.nickname}</CaptionText>
             </ProfileLink>
           </UserProfileWrapper>
         ) : (

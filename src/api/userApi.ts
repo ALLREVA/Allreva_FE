@@ -1,4 +1,5 @@
 import { endPoint } from 'constants/endPoint';
+import type { ProfileSchemaType as UserUpdateRequest } from 'schemas';
 import type { UserInfoResponse } from 'types';
 import { tokenAxios } from 'utils';
 
@@ -7,7 +8,7 @@ const getUserInfo = async () => {
   return data.result;
 };
 
-const updateUserProfile = async (profileData: FormData) => {
+const updateUserProfile = async (profileData: UserUpdateRequest) => {
   const { data } = await tokenAxios.patch(endPoint.UPDATE_PROFILE, profileData);
   return data;
 };

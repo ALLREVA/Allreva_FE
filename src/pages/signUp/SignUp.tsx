@@ -10,66 +10,33 @@ import ShortBio from './components/ShortBio';
 import AvatarUploader from 'components/avatarUploader/AvatarUploader';
 import BaseButton from 'components/buttons/BaseButton';
 import { usePostSignUp } from 'queries/auth';
-import { usePostPresigned } from 'queries/presigned';
-import type { LoginProvider } from 'types';
-
-interface ArtistRequest {
-  spotifyArtistId: string;
-  name: string;
-}
-
-interface SignUpFormData {
-  email: string;
-  nickname: string;
-  introduce: string;
-  loginProvider: LoginProvider;
-  imageUrl: string;
-  imageFile?: File;
-  memberArtistRequests?: ArtistRequest[];
-}
+import type { ProfileSchemaType } from 'schemas';
 
 const SignUp = () => {
   const location = useLocation();
   const userData = location.state;
   const navigate = useNavigate();
 
-  const { mutateAsync: presignedMutate } = usePostPresigned();
   const { mutate: signUpMutate } = usePostSignUp();
 
-  const methods = useForm<SignUpFormData>({
+  const methods = useForm<ProfileSchemaType>({
     defaultValues: {
       email: userData.email,
       nickname: '',
       introduce: '',
       loginProvider: 'KAKAO',
-      imageUrl: userData.profileImageUrl,
-      imageFile: undefined,
+      image: {
+        url: userData.profileImageUrl,
+      },
     },
   });
 
   const { watch } = methods;
   const email = watch('email');
-  const imageUrl = watch('imageUrl');
+  const imageUrl = watch('image.url');
 
-  const handleSubmit = methods.handleSubmit(async (data) => {
+  const handleSubmit = methods.handleSubmit((registerData) => {
     try {
-      const { email, nickname, imageFile, imageUrl, introduce, loginProvider } = data;
-
-      let profileUrl = imageUrl;
-
-      if (imageFile) {
-        profileUrl = await presignedMutate({ file: imageFile, fileType: 'PROFILE' });
-      }
-
-      const registerData = {
-        email,
-        nickname,
-        introduce,
-        loginProvider,
-        memberArtistRequests: [{ spotifyArtistId: '', name: '' }],
-        image: { url: profileUrl },
-      };
-
       signUpMutate(registerData, { onSuccess: () => navigate('/signin') });
     } catch (error) {
       console.error('회원가입 실패:', error);

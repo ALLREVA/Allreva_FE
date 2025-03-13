@@ -36,7 +36,7 @@ const initialState: FilterState = {
   surveyFilters: createInitialFilters(),
 };
 
-const FilterStore = createWithEqualityFn(
+const filterStore = createWithEqualityFn(
   devtools(
     immer<FilterStore>((set) => ({
       ...initialState,
@@ -59,4 +59,4 @@ const FilterStore = createWithEqualityFn(
 export const useFilterStore: StoreWithShallow<FilterStore> = <K extends keyof FilterStore>(
   keys: K[],
   withEqualityFn = true
-): Pick<FilterStore, K> => useStoreWithShallow(FilterStore, keys, withEqualityFn);
+): Pick<FilterStore, K> => useStoreWithShallow(filterStore, keys, withEqualityFn);

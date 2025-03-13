@@ -26,7 +26,7 @@ const BottomNav = () => {
     },
     알림: {
       icon: <TbBell size={20} />,
-      path: '/notification',
+      path: '/notifications',
     },
     MY: {
       icon: <LuUser2 size={20} />,

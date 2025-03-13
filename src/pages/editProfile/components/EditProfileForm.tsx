@@ -2,10 +2,11 @@ import { css } from '@emotion/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 import { EmailInput, NicknameInput, IntroduceInput } from './index';
 
-import { updateUserProfile } from 'api/userApi';
+import { updateUserProfile } from 'api';
 import AvatarUploader from 'components/avatarUploader/AvatarUploader';
 import BaseButton from 'components/buttons/BaseButton';
 import type { ProfileSchemaType } from 'schemas';
@@ -17,20 +18,22 @@ interface EditProfileFormProps {
 }
 
 const EditProfileForm = ({ userProfile }: EditProfileFormProps) => {
+  const navigate = useNavigate();
   const methods = useForm<ProfileSchemaType>({
     resolver: zodResolver(userProfileSchema),
     defaultValues: userProfile
       ? {
           email: userProfile.email,
           nickname: userProfile.nickname,
-          introduce: userProfile.introduce,
+          introduce: userProfile.introduce || '',
           loginProvider: 'KAKAO',
           memberArtistRequests: userProfile.artists.map((artist) => ({
             spotifyArtistId: artist.artistId,
             name: artist.name,
           })),
-
-          imageFile: undefined,
+          image: {
+            url: userProfile.profileImageUrl,
+          },
         }
       : undefined,
   });
@@ -39,26 +42,11 @@ const EditProfileForm = ({ userProfile }: EditProfileFormProps) => {
 
   const mutation = useMutation({
     mutationFn: async (data: ProfileSchemaType) => {
-      const formData = new FormData();
-
-      const memberRegisterRequest = {
-        email: data.email,
-        nickname: data.nickname,
-        introduce: data.introduce,
-        loginProvider: data.loginProvider,
-        memberArtistRequests: data.memberArtistRequests,
-      };
-
-      formData.append('memberRegisterRequest', JSON.stringify(memberRegisterRequest));
-
-      if (data.imageFile) {
-        formData.append('image', data.imageFile);
-      }
-
-      return updateUserProfile(formData);
+      return await updateUserProfile(data);
     },
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: ['userInfo'] });
+      navigate(-1);
     },
   });
 
@@ -80,6 +68,7 @@ const EditProfileForm = ({ userProfile }: EditProfileFormProps) => {
     </FormProvider>
   );
 };
+
 const contentContainer = css`
   display: flex;
   flex-direction: column;

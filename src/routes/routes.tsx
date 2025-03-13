@@ -38,8 +38,11 @@ const ManagingRentalDetail = lazy(() => import('pages/managingRentalDetail/Manag
 const MySurveyManagement = lazy(() => import('pages/mySurveyManagement/MySurveyManagement'));
 const ConcertRecord = lazy(() => import('pages/concertRecord/ConcertRecord'));
 const CreateConcertRecord = lazy(() => import('pages/createConcertRecord/CreateConcertRecord'));
+const CreateSeatReview = lazy(
+  () => import('pages/createConcertHallReview/CreateConcertHallReview')
+);
 
-export const router = createBrowserRouter([
+const routes = [
   {
     element: (
       <>
@@ -123,13 +126,11 @@ export const router = createBrowserRouter([
 
       { element: <SearchLayout />, children: [{ path: '/search', element: <Search /> }] },
 
-      // TODO: protected routes 추가
       {
         element: <AuthHeaderLayout />,
         children: [{ path: '/mypage', element: <MyPage /> }],
       },
 
-      // TODO: protected routes 추가
       {
         element: <PublicOnlyLayout />,
         children: [
@@ -145,7 +146,6 @@ export const router = createBrowserRouter([
         ],
       },
 
-      // TODO: protected routes 추가
       {
         element: <AuthTitleHeaderLayout />,
         children: [
@@ -211,8 +211,40 @@ export const router = createBrowserRouter([
             element: <Notification />,
             handle: { title: '알림' },
           },
+          {
+            path: '/concert-halls/:id/seat-review/create',
+            element: <CreateSeatReview type="create" />,
+            handle: { title: '좌석 리뷰 작성' },
+          },
+          {
+            path: '/concert-halls/:id/seat-review/edit/:reviewId',
+            element: <CreateSeatReview type="edit" />,
+            handle: { title: '좌석 리뷰 수정' },
+          },
+          {
+            path: '/mypage/seat-review/create',
+            element: <CreateSeatReview isFromMypage type="create" />,
+            handle: { title: '좌석 리뷰 작성' },
+          },
+          {
+            path: '/mypage/seat-review/edit/:reviewId',
+            element: <CreateSeatReview isFromMypage type="edit" />,
+            handle: { title: '좌석 리뷰 수정' },
+          },
         ],
       },
     ],
   },
-]);
+];
+
+const options = {
+  future: {
+    v7_relativeSplatPath: true,
+    v7_fetcherPersist: true,
+    v7_normalizeFormMethod: true,
+    v7_partialHydration: true,
+    v7_skipActionErrorRevalidation: true,
+  },
+};
+
+export const router = createBrowserRouter(routes, options);

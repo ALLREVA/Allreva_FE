@@ -1,15 +1,14 @@
 import { useMutation } from '@tanstack/react-query';
 
 import { requestPostSignUp } from 'api';
-import type { MemberRegister } from 'types';
-
-const signUp = async (registerData: MemberRegister) => {
-  return await requestPostSignUp(registerData);
-};
+import type { ProfileSchemaType as MemberRegister } from 'schemas';
 
 export const usePostSignUp = () => {
   return useMutation({
-    mutationFn: signUp,
+    mutationFn: async (registerData: MemberRegister) => {
+      return await requestPostSignUp(registerData);
+    },
+
     onSuccess: () => {
       console.log('회원 가입 성공');
     },

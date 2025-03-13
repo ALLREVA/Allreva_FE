@@ -8,6 +8,7 @@ import ParticipantsStatus from './components/sections/ParticipantsStatus';
 import DepositFormSheet from './components/sheets/DepositFormSheet';
 
 import Badge from 'components/badge/Badge';
+import { FetchErrorBoundary } from 'components/boundary';
 import BaseButton from 'components/buttons/BaseButton';
 import SimpleChip from 'components/chips/SimpleChip';
 import { useGetRentalDetails } from 'queries/rent';
@@ -72,10 +73,10 @@ const Information = styled(BodyRegularText)`
 `;
 
 const BottomButtonWrapper = styled.div`
-  position: sticky;
+  position: fixed;
   bottom: 0;
-  left: 0;
   width: 100%;
+  max-width: ${({ theme }) => theme.maxWidth};
   padding: 2.4rem;
   background-color: ${({ theme }) => theme.colors.black};
 `;
@@ -88,6 +89,16 @@ const InfoSection = ({ title, children }: { title: string; children: React.React
 );
 
 const BusRentalDetail = () => {
+  return (
+    <DetailContainer>
+      <FetchErrorBoundary>
+        <BusRentalDetailContent />
+      </FetchErrorBoundary>
+    </DetailContainer>
+  );
+};
+
+const BusRentalDetailContent = () => {
   const { id } = useParams();
   const { openModal } = useModalStore(['openModal']);
   const { isLoggedIn } = useAuthStore(['isLoggedIn']);
@@ -138,7 +149,7 @@ const BusRentalDetail = () => {
   };
 
   return (
-    <DetailContainer>
+    <>
       <ThumbnailContainer>
         <ThumbnailImg alt={title} src={imageUrl} />
       </ThumbnailContainer>
@@ -191,7 +202,7 @@ const BusRentalDetail = () => {
           {closed ? '신청 마감' : !isLoggedIn ? '로그인 후 신청 가능' : '폼 작성하기'}
         </BaseButton>
       </BottomButtonWrapper>
-    </DetailContainer>
+    </>
   );
 };
 
