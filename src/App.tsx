@@ -1,46 +1,37 @@
 import styled from '@emotion/styled';
 import { Suspense, useEffect } from 'react';
 import { RouterProvider } from 'react-router-dom';
+import { MoonLoader } from 'react-spinners';
 
 import { requestPermission } from '../src/firebase-messaging-sw';
-
-import { endPoint } from 'constants/endPoint';
-import { useScreenSize } from 'hooks';
+import { useAuthStore } from 'stores';
+import { useLoginCheck, useScreenSize } from 'hooks';
 import { router } from 'routes/routes';
-import { authStore, useAuthStore } from 'stores';
 import GlobalStyle from 'styles/GlobalStyle';
-import { publicAxios } from 'utils';
 
 function App() {
   const isLoggedIn = useAuthStore(['isLoggedIn']);
-
   useScreenSize();
+  useLoginCheck();
 
   useEffect(() => {
     if (isLoggedIn) {
-      const fetchLoginCheck = async () => {
-        try {
-          const response = await publicAxios.get(endPoint.LOGIN_CHECK, { withCredentials: true });
-
-          const newToken: string = response.headers['authorization'];
-          authStore.getState().setToken(newToken);
-
-          void requestPermission();
-        } catch (error) {
-          console.error('새로고침시 data 요청 에러', error);
-        }
-      };
-
-      void fetchLoginCheck();
+      requestPermission();
     }
   }, [isLoggedIn]);
 
   return (
     <>
       <GlobalStyle />
-      <Suspense fallback={<div>loading...</div>}>
+      <Suspense
+        fallback={
+          <SuspenseWrapper>
+            <MoonLoader color="#5E45BF" />
+          </SuspenseWrapper>
+        }
+      >
         <MobileWrapper>
-          <RouterProvider router={router} />
+          <RouterProvider future={{ v7_startTransition: true }} router={router} />
         </MobileWrapper>
       </Suspense>
     </>
@@ -59,6 +50,12 @@ const MobileWrapper = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
+`;
+
+const SuspenseWrapper = styled(MobileWrapper)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 export default App;

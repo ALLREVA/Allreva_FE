@@ -2,8 +2,9 @@ import type { ReactNode } from 'react';
 import { useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 
+import { TOAST_MESSAGES } from 'constants/toastMessage';
 import { HeaderLayout, TitleHeaderLayout } from 'layout';
-import { useAuthStore } from 'stores';
+import { useAuthStore, useToastStore } from 'stores';
 
 type AuthType = 'AUTH_ONLY' | 'PUBLIC_ONLY' | 'ALL';
 
@@ -18,12 +19,15 @@ const ProtectedLayout = ({
   authType = 'AUTH_ONLY',
   redirectPath = '/',
 }: ProtectedLayoutProps) => {
+  const { addToast } = useToastStore(['addToast']);
   const { isLoggedIn } = useAuthStore(['isLoggedIn']);
+
   const navigate = useNavigate();
 
   useEffect(() => {
     if (authType === 'AUTH_ONLY' && !isLoggedIn) {
-      navigate('/signin', { replace: true });
+      addToast(TOAST_MESSAGES.AUTH_ALERT);
+      navigate('/', { replace: true });
       return;
     }
 

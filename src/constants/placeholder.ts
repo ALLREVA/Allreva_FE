@@ -39,4 +39,9 @@ export const CONCERT_RECORD_PLACEHOLDER = {
   content: `공연에 대한 간단한 기록을 남겨주세요`,
 };
 
+export const SEAT_REVIEW_PLACEHOLDER = {
+  seatName: `예시) 3층 309구역 B열 05번`,
+  content: `좌석에 대한 간단한 후기를 작성해주세요`,
+};
+
 export type SearchPlaceholderKeys = keyof typeof SEARCH_PLACEHOLDER;
