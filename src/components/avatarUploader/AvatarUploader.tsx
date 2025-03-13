@@ -4,16 +4,19 @@ import { useFormContext } from 'react-hook-form';
 import { BiSolidUser } from 'react-icons/bi';
 import { LuCamera } from 'react-icons/lu';
 
+import { usePostPresigned } from 'queries/presigned/usePostPresigned';
+
 interface AvatarUploaderProps {
   imageUrl: string;
 }
+
 const AvatarUploader = ({ imageUrl }: AvatarUploaderProps) => {
   const { setValue } = useFormContext();
   const [imageSrc, setImageSrc] = useState<string | null>(imageUrl || null);
+  const { mutateAsync: presignedMutate } = usePostPresigned();
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-
     if (!file) return;
 
     const fileType = file.type;
@@ -23,14 +26,27 @@ const AvatarUploader = ({ imageUrl }: AvatarUploaderProps) => {
       return;
     }
 
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      const result = reader.result as string;
-      setImageSrc(result);
-      setValue('imageFile', file);
-      setValue('imageUrl', result); // 미리보기용 url 입니다
-    };
-    reader.readAsDataURL(file);
+    try {
+      // 미리보기 즉시 표시
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const previewUrl = reader.result as string;
+        setImageSrc(previewUrl);
+      };
+      reader.readAsDataURL(file);
+
+      // 파일 업로드 및 최종 URL 가져오기
+      const fileUrl = await presignedMutate({
+        file,
+        fileType: 'PROFILE',
+      });
+
+      // 필드 이름에 따라 적절히 폼 값 업데이트
+      setValue('image.url', fileUrl);
+    } catch (error) {
+      console.error('이미지 업로드 실패:', error);
+      alert('이미지 업로드에 실패했습니다.');
+    }
   };
 
   useEffect(() => {
@@ -99,3 +115,4 @@ const PreviewImg = styled.img`
 `;
 
 export default AvatarUploader;
+// https://allreva-bucket.s3.ap-northeast-2.amazonaws.com/PROFILE/8c62c9db161f495484dda7c69c6e89fd_fishg87c0162e1_640.jpg
