@@ -63,15 +63,14 @@ const Callback = () => {
       },
     });
 
-    const authHeader = headers['authorization'] || headers['Authorization'];
-    const token = authHeader?.replace('Bearer ', '');
+    const token = headers['authorization'] || headers['Authorization'];
 
     return { data, token };
   };
 
   const setTokenStorage = (data: CallbackResultResponse, token: string | null) => {
     if (token) {
-      tokenAxios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      tokenAxios.defaults.headers.common['Authorization'] = token;
       setIsLoggedIn();
       setUserProfile(data);
       setToken(token);
