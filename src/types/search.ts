@@ -5,6 +5,7 @@ export interface ConcertData {
   poster: string;
   title: string;
   concertHallName: string;
+  hallId: string;
   stdate: string;
   eddate: string;
   episodes: string[];
