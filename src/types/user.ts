@@ -27,18 +27,6 @@ export interface BankAccount {
   number: string;
 }
 
-// SignUp
-export interface MemberRegister {
-  email: string;
-  nickname: string;
-  introduce: string | null;
-  loginProvider: LoginProvider;
-  memberArtistRequests: FavoriteArtist[];
-  image: {
-    url: string;
-  };
-}
-
 export type RefundAccountForm = BankAccount;
 
 export type UserInfoResponse = ApiResponse<UserInfo>;
