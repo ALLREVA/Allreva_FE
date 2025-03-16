@@ -7,6 +7,7 @@ import ManagementSection from './components/ManagementSection';
 import UserProfile from './components/UserProfile';
 import { extractAccountInfo } from './utils';
 
+import { requestSignOut } from 'api';
 import { FetchErrorBoundary } from 'components/boundary';
 import { useGetUserInfo } from 'queries/user/useGetUserInfo';
 import { useAuthStore } from 'stores';
@@ -27,7 +28,8 @@ const MyPageContent = () => {
   const { clearAuthState } = useAuthStore(['clearAuthState']);
   const accountInfo = extractAccountInfo(userInfo);
 
-  const logOutHandler = () => {
+  const logOutHandler = async () => {
+    await requestSignOut();
     clearAuthState();
     navigate('/', { replace: true });
   };

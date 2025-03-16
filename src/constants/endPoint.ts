@@ -34,6 +34,7 @@ export const endPoint = {
   REISSUE_TOKEN: '/auth/token/reissue',
   SIGNIN: '/signin',
   SIGNUP: '/members/register',
+  SIGNOUT: '/auth/logout',
 
   // User API
   GET_PROFILE: '/members',
