@@ -76,7 +76,7 @@ const SignUpContainer = styled.div`
   align-items: center;
   width: 100%;
   height: 100vh;
-  padding: 0 2.4rem;
+  padding: 0 2.4rem 2.4rem;
   background-color: #1b1d1f;
   color: ${({ theme }) => theme.colors.white};
 `;
@@ -84,6 +84,7 @@ const SignUpContainer = styled.div`
 const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
   align-items: center;
   width: 100%;
   gap: 1.6rem;
