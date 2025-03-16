@@ -7,12 +7,10 @@ import logoTitle from 'assets/logoTitle.svg';
 import { useAuthStore } from 'stores';
 import { TitleText2, CaptionText } from 'styles/Typography';
 
-/**
- * @TODO path 경로 수정
- */
 const Header = () => {
-  const { isLoggedIn, userProfile } = useAuthStore(['isLoggedIn', 'userProfile']);
+  const { userProfile } = useAuthStore(['isLoggedIn', 'userProfile']);
 
+  console.log(userProfile);
   return (
     <HeaderContainer>
       <StyledLink to="/">
@@ -22,7 +20,7 @@ const Header = () => {
         <StyledLink to="/search">
           <IoSearch size={24} />
         </StyledLink>
-        {isLoggedIn ? (
+        {userProfile !== null ? (
           <UserProfileWrapper>
             <ProfileLink to="/mypage">
               {userProfile?.profileImageUrl ? (
