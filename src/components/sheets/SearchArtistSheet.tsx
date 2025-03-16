@@ -1,17 +1,16 @@
 import styled from '@emotion/styled';
 import { useState } from 'react';
 
-import Magnifier from 'assets/images/magnifier-icon.svg?react';
 import BottomSheet from 'components/bottomSheet/BottomSheet';
 import SearchArtistItem from 'components/items/SearchArtistItem';
 import SearchInput from 'components/searchInput/SearchInput';
 import { SEARCH_PLACEHOLDER } from 'constants/placeholder';
 import { useGetSearchArtist } from 'queries/search/useGetSearchArtist';
 import { useModalStore } from 'stores';
-import { BodyRegularText } from 'styles/Typography';
+import type { ArtistInfo } from 'types';
 
 interface SearchArtistSheetProps {
-  onArtistSelect?: (artistName: string) => void;
+  onArtistSelect: (artistInfo: ArtistInfo) => void;
 }
 
 const SheetContainer = styled.div`
@@ -29,28 +28,15 @@ const SearchResultContainer = styled.div<{ isError?: boolean }>`
   min-height: 32rem;
 `;
 
-const SearchIcon = styled(Magnifier)`
-  width: 5.2rem;
-  height: 5.2rem;
-`;
-
-const EmptyText = styled(BodyRegularText)`
-  line-height: 1.8;
-  text-align: center;
-  white-space: pre-line;
-`;
-
 const SearchArtistSheet = ({ onArtistSelect }: SearchArtistSheetProps) => {
   const { closeModal } = useModalStore(['closeModal']);
   const [searches, setSearches] = useState<string | null>('');
-  const { data: artists, isError } = useGetSearchArtist(searches);
+  const { data: artists } = useGetSearchArtist(searches);
 
-  const handleArtistSelect = (artistName: string) => {
-    onArtistSelect?.(artistName);
+  const handleArtistSelect = (artistInfo: ArtistInfo) => {
+    onArtistSelect(artistInfo);
     closeModal('bottomSheet', 'list');
   };
-
-  const handleSearchClear = () => setSearches('');
 
   return (
     <BottomSheet name="list">
@@ -58,27 +44,23 @@ const SearchArtistSheet = ({ onArtistSelect }: SearchArtistSheetProps) => {
         <SheetContainer>
           <SearchInput
             isActive
-            onClear={handleSearchClear}
+            onClear={() => setSearches('')}
             onSearch={setSearches}
             onValueChange={() => setSearches(null)}
             text={SEARCH_PLACEHOLDER.artist}
           />
-          <SearchResultContainer isError={isError}>
-            {isError ? (
-              <>
-                <SearchIcon />
-                <EmptyText>{`검색 결과가 없습니다. \n 정확한 아티스트명을 입력해주세요.`}</EmptyText>
-              </>
-            ) : (
-              artists?.map((artist) => (
-                <SearchArtistItem
-                  artistImg={artist.images[2].url}
-                  artistName={artist.name}
-                  key={artist.id}
-                  onClick={(artist) => handleArtistSelect(artist)}
-                />
-              ))
-            )}
+          <SearchResultContainer>
+            {artists?.map((artist) => (
+              <SearchArtistItem
+                artistInfo={{
+                  id: artist.id,
+                  name: artist.name,
+                  image: artist.images[2].url,
+                }}
+                key={artist.id}
+                onClick={(artist) => handleArtistSelect(artist)}
+              />
+            ))}
           </SearchResultContainer>
         </SheetContainer>
       </BottomSheet.Content>

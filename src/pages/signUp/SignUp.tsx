@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -10,7 +11,7 @@ import ShortBio from './components/ShortBio';
 import AvatarUploader from 'components/avatarUploader/AvatarUploader';
 import BaseButton from 'components/buttons/BaseButton';
 import { usePostSignUp } from 'queries/auth';
-import type { ProfileSchemaType } from 'schemas';
+import { userProfileSchema, type ProfileSchemaType } from 'schemas';
 
 const SignUp = () => {
   const location = useLocation();
@@ -20,6 +21,7 @@ const SignUp = () => {
   const { mutate: signUpMutate } = usePostSignUp();
 
   const methods = useForm<ProfileSchemaType>({
+    resolver: zodResolver(userProfileSchema),
     defaultValues: {
       email: userData.email,
       nickname: '',
@@ -28,6 +30,7 @@ const SignUp = () => {
       image: {
         url: userData.profileImageUrl,
       },
+      memberArtistRequests: [],
     },
   });
 
@@ -73,7 +76,7 @@ const SignUpContainer = styled.div`
   align-items: center;
   width: 100%;
   height: 100vh;
-  padding: 0 2.4rem;
+  padding: 0 2.4rem 2.4rem;
   background-color: #1b1d1f;
   color: ${({ theme }) => theme.colors.white};
 `;
@@ -81,6 +84,7 @@ const SignUpContainer = styled.div`
 const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
   align-items: center;
   width: 100%;
   gap: 1.6rem;

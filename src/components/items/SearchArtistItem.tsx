@@ -1,11 +1,11 @@
 import styled from '@emotion/styled';
 
 import { BodyMediumText } from 'styles/Typography';
+import type { ArtistInfo } from 'types';
 
 interface SearchArtistItemProps {
-  artistImg: string;
-  artistName: string;
-  onClick?: (artistName: string) => void;
+  artistInfo: ArtistInfo;
+  onClick: (artist: ArtistInfo) => void;
 }
 
 const ArtistItemContainer = styled.div`
@@ -40,17 +40,13 @@ const ArtistName = styled(BodyMediumText)`
   }
 `;
 
-const SearchArtistItem = ({ artistImg, artistName, onClick }: SearchArtistItemProps) => {
-  const handleConcertClick = () => {
-    onClick?.(artistName);
-  };
-
+const SearchArtistItem = ({ artistInfo, onClick }: SearchArtistItemProps) => {
   return (
-    <ArtistItemContainer onClick={handleConcertClick}>
+    <ArtistItemContainer onClick={() => onClick(artistInfo)}>
       <ArtistImgContainer>
-        <ArtistImg alt="Artist Image" src={artistImg} />
+        <ArtistImg alt="Artist Image" src={artistInfo.image} />
       </ArtistImgContainer>
-      <ArtistName>{artistName}</ArtistName>
+      <ArtistName>{artistInfo.name}</ArtistName>
     </ArtistItemContainer>
   );
 };

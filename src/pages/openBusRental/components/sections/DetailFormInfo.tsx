@@ -16,7 +16,7 @@ import SearchConcertSheet from 'components/sheets/SearchConcertSheet';
 import type { REGIONS } from 'constants/filterTypes';
 import { RENTAL_FORM_PLACEHOLDER } from 'constants/placeholder';
 import { useModalStore, useRentalFormStore } from 'stores';
-import type { ConcertData } from 'types';
+import type { ArtistInfo, ConcertData } from 'types';
 
 const DetailFormInfo = () => {
   const {
@@ -39,8 +39,8 @@ const DetailFormInfo = () => {
     updateFormData('concertId', concertData.id);
   };
 
-  const handleArtistSelect = (artist: string) => {
-    updateFormData('artistName', artist);
+  const handleArtistSelect = (artist: ArtistInfo) => {
+    updateFormData('artistName', artist.name);
   };
 
   const handleArtistDelete = () => {
