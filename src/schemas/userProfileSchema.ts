@@ -9,7 +9,7 @@ export const userProfileSchema = z.object({
   email: z.string().email(),
   nickname: z
     .string()
-    .min(1, { message: '닉네임을 입력해주세요' })
+    .min(2, { message: '닉네임을 2자 이상 입력해주세요' })
     .regex(/^[가-힣A-Za-z0-9\s]+$/, {
       message: '닉네임은 한글, 영문, 숫자만 입력 가능합니다',
     }),

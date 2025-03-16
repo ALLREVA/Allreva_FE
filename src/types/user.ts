@@ -7,11 +7,6 @@ interface Artist {
   artistId: string;
 }
 
-interface FavoriteArtist {
-  spotifyArtistId: string;
-  name: string;
-}
-
 export interface UserInfo {
   email: string;
   nickname: string;

@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -10,7 +11,7 @@ import ShortBio from './components/ShortBio';
 import AvatarUploader from 'components/avatarUploader/AvatarUploader';
 import BaseButton from 'components/buttons/BaseButton';
 import { usePostSignUp } from 'queries/auth';
-import type { ProfileSchemaType } from 'schemas';
+import { userProfileSchema, type ProfileSchemaType } from 'schemas';
 
 const SignUp = () => {
   const location = useLocation();
@@ -20,6 +21,7 @@ const SignUp = () => {
   const { mutate: signUpMutate } = usePostSignUp();
 
   const methods = useForm<ProfileSchemaType>({
+    resolver: zodResolver(userProfileSchema),
     defaultValues: {
       email: userData.email,
       nickname: '',
@@ -28,6 +30,7 @@ const SignUp = () => {
       image: {
         url: userData.profileImageUrl,
       },
+      memberArtistRequests: [],
     },
   });
 

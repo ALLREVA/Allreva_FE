@@ -30,5 +30,11 @@ export interface SearchArtist {
   images: SearchArtistImages[];
 }
 
+export interface ArtistInfo {
+  id: string;
+  name: string;
+  image: string;
+}
+
 export type SearchConcertResponse = ApiResponse<SearchConcert>;
 export type SearchArtistResponse = ApiResponse<SearchArtist[]>;
