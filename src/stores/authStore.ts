@@ -1,4 +1,4 @@
-import { devtools, persist } from 'zustand/middleware';
+import { createJSONStorage, devtools, persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 import { createWithEqualityFn } from 'zustand/traditional';
 
@@ -34,25 +34,34 @@ const initialState: AuthState = {
 
 export const authStore = createWithEqualityFn(
   devtools(
-    immer<AuthStore>((set) => ({
-      ...initialState,
-      setIsLoggedIn: () => {
-        set((state) => {
-          state.isLoggedIn = true;
-        });
-      },
-      setUserProfile: (profile) => {
-        set((state) => {
-          state.userProfile = profile;
-        });
-      },
-      setToken: (token) => {
-        set((state) => {
-          state.token = token;
-        });
-      },
-      clearAuthState: () => set(initialState),
-    }))
+    persist(
+      immer<AuthStore>((set) => ({
+        ...initialState,
+        setIsLoggedIn: () => {
+          set((state) => {
+            state.isLoggedIn = true;
+          });
+        },
+        setUserProfile: (profile) => {
+          set((state) => {
+            state.userProfile = profile;
+          });
+        },
+        setToken: (token) => {
+          set((state) => {
+            state.token = token;
+          });
+        },
+        clearAuthState: () => set(initialState),
+      })),
+      {
+        name: 'user-info',
+        partialize: (state) => ({
+          userProfile: state.userProfile,
+        }),
+        storage: createJSONStorage(() => sessionStorage),
+      }
+    )
   )
 );
 
