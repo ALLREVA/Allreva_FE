@@ -19,7 +19,6 @@ export const useLoginCheck = () => {
         const response = await publicAxios.get(endPoint.LOGIN_CHECK, { withCredentials: true });
 
         const newToken: string = response.headers['authorization'];
-        console.log(newToken);
         if (newToken) setIsLoggedIn();
         setToken(newToken);
 
