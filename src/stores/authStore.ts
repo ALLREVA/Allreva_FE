@@ -58,6 +58,7 @@ export const authStore = createWithEqualityFn(
         name: 'user-info',
         partialize: (state) => ({
           userProfile: state.userProfile,
+          isLoggedIn: state.isLoggedIn,
         }),
         storage: createJSONStorage(() => sessionStorage),
       }
