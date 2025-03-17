@@ -10,7 +10,6 @@ import { TitleText2, CaptionText } from 'styles/Typography';
 const Header = () => {
   const { userProfile } = useAuthStore(['isLoggedIn', 'userProfile']);
 
-  console.log(userProfile);
   return (
     <HeaderContainer>
       <StyledLink to="/">
