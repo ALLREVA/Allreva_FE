@@ -5,10 +5,10 @@ import ValidationMessage from 'components/message/ValidationMessage';
 import { RENTAL_FORM_PLACEHOLDER } from 'constants/placeholder';
 import { useRentalFormStore } from 'stores';
 import { CaptionText } from 'styles/Typography';
-import type { RentalFormData } from 'types';
+import type { RentalFormFields } from 'types';
 
 interface RentalTitleFieldProps {
-  name: keyof RentalFormData;
+  name: keyof RentalFormFields;
   unit?: string;
   pattern?: string;
   isDisabled?: boolean;

@@ -45,3 +45,6 @@ export const busInfoSchema = z.object({
 
 export type RentalFormSchemaType = z.infer<(typeof rentalFormSchema)[number]>;
 export type BusInfoSchemaType = z.infer<typeof busInfoSchema>;
+
+type UnionToKeys<T> = T extends T ? keyof T : never;
+export type RentalFormKeys = UnionToKeys<RentalFormSchemaType>;

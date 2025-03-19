@@ -10,19 +10,19 @@ import type {
   FormAdditionalInfo,
   FormDetailInfo,
   FormDrivingInfo,
-  RentalFormData,
+  RentalFormFields,
 } from 'types';
 
 interface RentalFormStore {
   concertData: ConcertData | null;
-  formData: RentalFormData;
+  formData: RentalFormFields;
   updateConcertData: (value: ConcertData) => void;
-  updateFormData: <K extends keyof RentalFormData>(key: K, value: RentalFormData[K]) => void;
+  updateFormData: <K extends keyof RentalFormFields>(key: K, value: RentalFormFields[K]) => void;
   resetFormData: () => void;
 }
 
 export const initDetailInfo: FormDetailInfo = {
-  imageUrl: '',
+  imageUrl: null,
   title: '',
   region: null,
   depositAccount: '',
@@ -51,7 +51,7 @@ export const initAdditionalInfo: FormAdditionalInfo = {
   information: '',
 };
 
-const initFormData: RentalFormData = {
+const initFormData: RentalFormFields = {
   ...initDetailInfo,
   ...initDrivingInfo,
   ...initAdditionalInfo,

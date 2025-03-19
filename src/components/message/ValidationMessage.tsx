@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { LuAlertCircle } from 'react-icons/lu';
+import { LuCircleAlert } from 'react-icons/lu';
 
 import { CaptionText } from 'styles/Typography';
 
@@ -17,7 +17,7 @@ const Message = styled.div`
 const ValidationMessage = ({ message }: ValidationMessageProps) => {
   return (
     <Message>
-      <LuAlertCircle size={18} />
+      <LuCircleAlert size={18} />
       <CaptionText>{message}</CaptionText>
     </Message>
   );

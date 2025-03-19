@@ -8,14 +8,14 @@ import ValidationMessage from 'components/message/ValidationMessage';
 import { RENTAL_FORM_PLACEHOLDER } from 'constants/placeholder';
 import { useRentalFormStore } from 'stores';
 import { BodyRegularText } from 'styles/Typography';
-import type { RentalFormData } from 'types';
+import type { RentalFormFields } from 'types';
 
 interface InputStyle {
   unit?: string;
 }
 
 interface InputFieldProps extends InputStyle {
-  name: keyof RentalFormData;
+  name: keyof RentalFormFields;
   unit?: string;
   pattern?: string;
   isLive?: boolean;

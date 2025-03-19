@@ -1,5 +1,5 @@
 import { endPoint } from 'constants/endPoint';
-import type { DepositFormResponse, PageParam } from 'types';
+import type { DepositFormResponse, PageParam, RentalFormData } from 'types';
 import type {
   RentalAccountResponse,
   RentalDetailResponse,
@@ -34,6 +34,10 @@ export const requestGetDepositAccount = async (id: string) => {
 
 export const requestPostDepositForm = async (formData: string) => {
   return await tokenAxios.post<DepositFormResponse>(`${endPoint.APPLY_RENT_FORM}`, formData);
+};
+
+export const requestPostRentalForm = async (data: RentalFormData) => {
+  return await tokenAxios.post(`${endPoint.CREATE_RENT_FORM}`, data);
 };
 
 export const requestGetManagingRentalList = async () => {

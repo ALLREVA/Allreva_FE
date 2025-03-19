@@ -1,7 +1,8 @@
-import type { BusInfo, DepositFormData, RentalFormFields } from 'types';
+import type { RentalFormKeys } from 'schemas';
+import type { BusInfo, DepositFormData } from 'types';
 
 type DepositFormPlaceholder = Partial<Record<keyof DepositFormData, string>>;
-type RentalFormPlaceholder = Partial<Record<keyof RentalFormFields | keyof BusInfo, string>>;
+type RentalFormPlaceholder = Partial<Record<RentalFormKeys | keyof BusInfo, string>>;
 
 export const DEPOSIT_FORM_PLACEHOLDER: DepositFormPlaceholder = {
   depositorName: `성함을 입력해주세요`,

@@ -4,10 +4,10 @@ import { Controller, useFormContext } from 'react-hook-form';
 import ValidationMessage from 'components/message/ValidationMessage';
 import { RENTAL_FORM_PLACEHOLDER } from 'constants/placeholder';
 import { useRentalFormStore } from 'stores';
-import type { RentalFormData } from 'types';
+import type { RentalFormFields } from 'types';
 
 interface RentalTextAreaProps {
-  name: keyof RentalFormData;
+  name: keyof RentalFormFields;
 }
 
 const TextAreaContainer = styled.div`

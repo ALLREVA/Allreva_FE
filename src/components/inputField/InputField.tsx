@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import type { ControllerRenderProps, FieldValues } from 'react-hook-form';
 import { Controller, useFormContext } from 'react-hook-form';
-import { LuAlertCircle } from 'react-icons/lu';
+import { LuCircleAlert } from 'react-icons/lu';
 import { NumericFormat, PatternFormat } from 'react-number-format';
 
 import { BodyRegularText, CaptionText } from 'styles/Typography';
@@ -156,7 +156,7 @@ const InputField = ({
           </InputFieldWrapper>
           {fieldState?.error && (
             <ValidationMessage>
-              <LuAlertCircle size={18} />
+              <LuCircleAlert size={18} />
               <CaptionText>{fieldState.error.message}</CaptionText>
             </ValidationMessage>
           )}
