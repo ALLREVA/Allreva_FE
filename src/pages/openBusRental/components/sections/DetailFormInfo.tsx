@@ -13,10 +13,9 @@ import SearchField from 'components/searchField/SearchField';
 import RegionListSheet from 'components/sheets/RegionListSheet';
 import SearchArtistSheet from 'components/sheets/SearchArtistSheet';
 import SearchConcertSheet from 'components/sheets/SearchConcertSheet';
-import type { REGIONS } from 'constants/filterTypes';
 import { RENTAL_FORM_PLACEHOLDER } from 'constants/placeholder';
 import { useModalStore, useRentalFormStore } from 'stores';
-import type { ArtistInfo, ConcertData } from 'types';
+import type { ConcertData } from 'types';
 
 const DetailFormInfo = () => {
   const {
@@ -39,18 +38,6 @@ const DetailFormInfo = () => {
     updateFormData('concertId', concertData.id);
   };
 
-  const handleArtistSelect = (artist: ArtistInfo) => {
-    updateFormData('artistName', artist.name);
-  };
-
-  const handleArtistDelete = () => {
-    updateFormData('artistName', '');
-  };
-
-  const handleRegionChange = (region: (typeof REGIONS)[number]) => {
-    updateFormData('region', region);
-  };
-
   return (
     <>
       <RentalFormField>
@@ -66,7 +53,9 @@ const DetailFormInfo = () => {
         <SearchField
           name="concert"
           onClick={() =>
-            openSheetModal(<SearchConcertSheet onConcertSelect={handleConcertSelect} />)
+            openSheetModal(
+              <SearchConcertSheet isRelatedHall={false} onConcertSelect={handleConcertSelect} />
+            )
           }
         />
         {concertData && <SearchConcertItem concertData={concertData} isInactive />}
@@ -78,10 +67,16 @@ const DetailFormInfo = () => {
         <RentalFormField.Title title="아티스트명" />
         <SearchField
           name="artist"
-          onClick={() => openSheetModal(<SearchArtistSheet onArtistSelect={handleArtistSelect} />)}
+          onClick={() =>
+            openSheetModal(
+              <SearchArtistSheet
+                onArtistSelect={(artist) => updateFormData('artistName', artist.name)}
+              />
+            )
+          }
         />
         {formData.artistName && (
-          <SimpleChip hasDeleteIcon onDeleteClick={handleArtistDelete}>
+          <SimpleChip hasDeleteIcon onDeleteClick={() => updateFormData('artistName', '')}>
             {formData.artistName}
           </SimpleChip>
         )}
@@ -93,7 +88,11 @@ const DetailFormInfo = () => {
         <RentalFormField.Title title="차대절 지역" />
         <RentalFormSelect
           name="region"
-          onClick={() => openSheetModal(<RegionListSheet onChange={handleRegionChange} />)}
+          onClick={() =>
+            openSheetModal(
+              <RegionListSheet onChange={(region) => updateFormData('region', region)} />
+            )
+          }
           placeholder={RENTAL_FORM_PLACEHOLDER.region}
         />
       </RentalFormField>

@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Controller, useFormContext } from 'react-hook-form';
-import { LuAlertCircle } from 'react-icons/lu';
+import { LuCircleAlert } from 'react-icons/lu';
 
 import { CaptionText } from 'styles/Typography';
 
@@ -106,7 +106,7 @@ const TitleInputField = ({
           )}
           {!maxCount && fieldState?.error && (
             <ValidationMessage>
-              <LuAlertCircle size={18} />
+              <LuCircleAlert size={18} />
               <CaptionText>{fieldState.error.message}</CaptionText>
             </ValidationMessage>
           )}

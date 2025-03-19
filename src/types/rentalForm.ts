@@ -1,13 +1,16 @@
 import type { Region } from './filter';
 import type { BusSize, BusType, RefundType } from './rental';
 
-export interface FormDetailInfo {
-  imageUrl: string;
+interface DetailInfo {
   title: string;
   region: Region | null;
   depositAccount: string;
   concertId: number;
   artistName: string;
+}
+
+export interface FormDetailInfo extends DetailInfo {
+  imageUrl: File | null;
 }
 
 export interface BusInfo {
@@ -26,6 +29,11 @@ export interface FormDrivingData {
   downTimePrice: number;
 }
 
+// data 전송 시 필요한 상세 정보 데이터
+export interface FormDetailData extends DetailInfo {
+  image: { url: string };
+}
+
 // data 전송 시 필요한 운행 정보 데이터
 export interface FormDrivingInfo extends FormDrivingData, BusInfo {}
 
@@ -42,5 +50,5 @@ export interface FormAdditionalInfo {
   information: string;
 }
 
-export interface RentalFormData extends FormDetailInfo, FormDrivingInfo, FormAdditionalInfo {}
-export interface RentalFormFields extends FormDetailInfo, FormDrivingFields, FormAdditionalInfo {}
+export interface RentalFormData extends FormDetailData, FormDrivingInfo, FormAdditionalInfo {}
+export interface RentalFormFields extends FormDetailInfo, FormDrivingInfo, FormAdditionalInfo {}

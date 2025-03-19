@@ -16,6 +16,7 @@ interface SearchConcertSheetProps {
   isPastSearch?: boolean;
   onConcertSelect?: (data: ConcertData) => void;
   filterFn?: (concert: ConcertData) => boolean;
+  isRelatedHall?: boolean;
 }
 
 const SheetContainer = styled.div`
@@ -52,6 +53,7 @@ const SearchConcertSheet = ({
   isPastSearch = false,
   onConcertSelect,
   filterFn,
+  isRelatedHall = true,
 }: SearchConcertSheetProps) => {
   const { closeModal } = useModalStore(['closeModal']);
   const [searches, setSearches] = useState<string | null>('');
@@ -94,7 +96,9 @@ const SearchConcertSheet = ({
           <EmptyText>
             {isError
               ? `검색 결과가 없습니다. \n 정확한 공연명을 입력해주세요.`
-              : '해당 공연장에서 진행된 공연이 아니에요!'}
+              : isRelatedHall
+                ? '해당 공연장에서 진행된 공연이 아니에요!'
+                : '정확한 공연명을 입력해주세요.'}
           </EmptyText>
         </>
       );

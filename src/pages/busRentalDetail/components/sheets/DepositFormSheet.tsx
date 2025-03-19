@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMemo } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
-import { LuAlertCircle } from 'react-icons/lu';
+import { LuCircleAlert } from 'react-icons/lu';
 import { useParams } from 'react-router-dom';
 
 import DepositDialog from './DepositDialog';
@@ -112,7 +112,7 @@ const DepositFormSheet = ({
     <BottomSheet name="list">
       <BottomSheet.Content>
         <AlertMessage>
-          <LuAlertCircle size={20} />
+          <LuCircleAlert size={20} />
           <BodyRegularText>입금 후에 폼을 작성해주세요!</BodyRegularText>
         </AlertMessage>
         <FormProvider {...methods}>

@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useState } from 'react';
 import { BiHomeAlt } from 'react-icons/bi';
-import { LuUser2 } from 'react-icons/lu';
+import { LuUserRound } from 'react-icons/lu';
 import { TbMessageCircle, TbBell } from 'react-icons/tb';
 import { useNavigate } from 'react-router-dom';
 
@@ -29,7 +29,7 @@ const BottomNav = () => {
       path: '/notifications',
     },
     MY: {
-      icon: <LuUser2 size={20} />,
+      icon: <LuUserRound size={20} />,
       path: '/mypage',
     },
   };

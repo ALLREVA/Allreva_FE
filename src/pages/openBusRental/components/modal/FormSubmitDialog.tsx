@@ -2,15 +2,17 @@ import { useNavigate } from 'react-router-dom';
 
 import BaseButton from 'components/buttons/BaseButton';
 import Dialog from 'components/dialog/Dialog';
+import { usePostPresigned } from 'queries/presigned';
 import { usePostRentalForm } from 'queries/rentForm';
 import { rentalFormStore, useModalStore, useRentalFormStore } from 'stores';
 import { TitleText2 } from 'styles/Typography';
 
 const FormSubmitDialog = () => {
-  const { closeModal } = useModalStore(['closeModal']);
-  const { mutate } = usePostRentalForm();
-  const { formData, resetFormData } = useRentalFormStore(['formData', 'resetFormData']);
   const navigate = useNavigate();
+  const { closeModal } = useModalStore(['closeModal']);
+  const { formData, resetFormData } = useRentalFormStore(['formData', 'resetFormData']);
+  const { mutate: rentalFormMutate } = usePostRentalForm();
+  const { mutateAsync: presignedMutate } = usePostPresigned();
 
   const handleSubmitSuccess = () => {
     resetFormData();
@@ -19,8 +21,22 @@ const FormSubmitDialog = () => {
     closeModal('dialog', 'confirm');
   };
 
-  const handleSubmitClick = () => {
-    mutate(formData, { onSuccess: handleSubmitSuccess });
+  const handleSubmitClick = async () => {
+    try {
+      const { imageUrl, ...rest } = formData;
+
+      if (!imageUrl) throw new Error('메인 이미지가 없습니다.');
+
+      const presignedUrl = await presignedMutate({ file: imageUrl, fileType: 'RENT' });
+      const newFormData = {
+        ...rest,
+        image: { url: presignedUrl },
+      };
+
+      rentalFormMutate(newFormData, { onSuccess: handleSubmitSuccess });
+    } catch (error) {
+      console.log('폼 등록 실패:', error);
+    }
   };
 
   return (

@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { LuCamera } from 'react-icons/lu';
 import { TbX } from 'react-icons/tb';
@@ -79,36 +79,39 @@ const RentalThumbField = () => {
   const {
     control,
     setValue,
-    watch,
     formState: { errors },
   } = useFormContext<RentalFormSchemaType>();
   const { formData, updateFormData } = useRentalFormStore(['formData', 'updateFormData']);
+  const [previewImage, setPreviewImage] = useState('');
 
-  const previewImage = watch(FIELD_NAME);
+  const updatePreview = (file: File) => {
+    // 이미지 미리보기
+    const reader = new FileReader();
+    reader.onload = () => {
+      setValue(FIELD_NAME, reader.result as string);
+      setPreviewImage(reader.result as string);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  useEffect(() => {
+    if (formData.imageUrl) {
+      updatePreview(formData.imageUrl);
+    }
+  }, []);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const reader = new FileReader();
-    reader.onload = () => {
-      setValue(FIELD_NAME, reader.result as string);
-      updateFormData(FIELD_NAME, reader.result as string);
-    };
-    reader.readAsDataURL(file);
+    updatePreview(file);
+    updateFormData(FIELD_NAME, file);
   };
 
   const handleImageDelete = () => {
     setValue(FIELD_NAME, null, { shouldValidate: true });
-    updateFormData(FIELD_NAME, '');
+    updateFormData(FIELD_NAME, null);
   };
-
-  useEffect(() => {
-    if (formData.imageUrl) {
-      setValue(FIELD_NAME, formData.imageUrl);
-      updateFormData(FIELD_NAME, formData.imageUrl);
-    }
-  }, [formData.imageUrl, setValue, updateFormData]);
 
   const renderImage = () => {
     if (previewImage) {
