@@ -109,7 +109,8 @@ const RentalThumbField = () => {
   };
 
   const handleImageDelete = () => {
-    setValue(FIELD_NAME, null, { shouldValidate: true });
+    setValue(FIELD_NAME, null);
+    setPreviewImage('');
     updateFormData(FIELD_NAME, null);
   };
 
