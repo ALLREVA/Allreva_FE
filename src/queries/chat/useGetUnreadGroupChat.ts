@@ -21,6 +21,6 @@ export const useGetUnreadGroupChat = (groupChatId: number, criteriaNumber?: numb
       const lastData = lastPage[lastPage.length - 1];
       return { groupChatId, criteriaNumber: lastData.messageNumber };
     },
-    enabled: false,
+    enabled: !!criteriaNumber,
   });
 };

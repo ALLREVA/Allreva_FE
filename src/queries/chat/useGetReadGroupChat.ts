@@ -19,6 +19,6 @@ export const useGetReadGroupChat = (groupChatId: number, criteriaNumber?: number
       return { groupChatId, criteriaNumber: firstPage[0].messageNumber };
     },
     getNextPageParam: () => null,
-    enabled: false,
+    enabled: !!criteriaNumber,
   });
 };

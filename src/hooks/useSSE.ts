@@ -1,9 +1,9 @@
-import { endPoint } from 'constants/endPoint';
-import { API_URL } from 'constants/url';
-
 import axios from 'axios';
 import { EventSourcePolyfill } from 'event-source-polyfill';
 import { useEffect, useRef } from 'react';
+
+import { endPoint } from 'constants/endPoint';
+import { API_URL } from 'constants/url';
 import { useAuthStore, useChatStore } from 'stores';
 import type { SSEMessage } from 'types';
 

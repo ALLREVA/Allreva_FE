@@ -46,7 +46,7 @@ export const requestLeaveSingleChat = async (singleChatId: number) => {
 // Single Chat Room
 export const requestPostSingleChat = async (otherMemberId: number) => {
   return await tokenAxios.post<CreateSingleChatResponse>(endPoint.CREATE_SINGLE_CHAT, {
-    data: { otherMemberId },
+    otherMemberId,
   });
 };
 
@@ -74,9 +74,7 @@ export const requestGetJoinGroupChat = async (uuid: string) => {
 };
 
 export const requestPostGroupChat = async (uuid: string) => {
-  return await tokenAxios.post<CreateGroupChatResponse>(endPoint.CREATE_GROUP_CHAT, {
-    data: { uuid },
-  });
+  return await tokenAxios.post<CreateGroupChatResponse>(endPoint.CREATE_GROUP_CHAT, { uuid });
 };
 
 export const requestGetEnterGroupChat = async (groupChatId: number) => {

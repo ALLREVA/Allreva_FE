@@ -85,7 +85,7 @@ export const endPoint = {
   // Chat API
   GET_GROUP_CHAT_INVITCODE: (groupChatId: number) => `/chat/group/invitation/${groupChatId}`,
   GET_GROUP_CHAT_INFO: (groupChatId: number) => `/chat/group/${groupChatId}`,
-  GET_JOIN_GROUP_CHAT: (uuid: string) => `/chat/group/${uuid}`,
+  GET_JOIN_GROUP_CHAT: (uuid: string) => `/chat/group/join/${uuid}`,
   CREATE_GROUP_CHAT: '/chat/group/join',
   UPDATE_GROUP_CHAT: '/chat/group',
   DELETE_GROUP_CHAT: '/chat/group',
@@ -106,8 +106,4 @@ export const endPoint = {
 
   GROUP_CHAT_WS: (groupChatId: string) => `/group/connection/${groupChatId}`,
   SINGLE_CHAT_WS: (singleChatId: string) => `/single/connection/${singleChatId}`,
-
-  // Presigned API
-  UPDATE_PRESIGNED_URL: '/file/presigned-url',
-  DELETE_PRESIGNED_URL: '/file/presigned-url',
 };

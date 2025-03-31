@@ -5,6 +5,12 @@ import { useState } from 'react';
 import { BiSolidCamera } from 'react-icons/bi';
 import { TbArrowUp, TbPhotoFilled } from 'react-icons/tb';
 
+import type { MessageContent } from 'types';
+
+interface ChatInputProps {
+  onSendMessage: (content: MessageContent) => void;
+}
+
 const ChatInputContainer = styled.div`
   display: flex;
   align-items: center;
@@ -81,7 +87,7 @@ const SubmitButton = styled.button`
   color: ${({ theme }) => theme.colors.white};
 `;
 
-const ChatInput = () => {
+const ChatInput = ({ onSendMessage }: ChatInputProps) => {
   const [value, setValue] = useState('');
 
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -94,6 +100,11 @@ const ChatInput = () => {
     target.style.height = '2.6rem';
     // 텍스트에 맞춰 높이 조정
     target.style.height = `${target.scrollHeight}px`;
+  };
+
+  const handleSendMessage = () => {
+    onSendMessage({ contentType: 'TEXT', payload: value.trim() });
+    setValue('');
   };
 
   return (
@@ -111,7 +122,7 @@ const ChatInput = () => {
           placeholder="메시지를 입력하세요"
           value={value}
         />
-        <SubmitButton>
+        <SubmitButton onClick={handleSendMessage}>
           <TbArrowUp size={20} />
         </SubmitButton>
       </InputContainer>

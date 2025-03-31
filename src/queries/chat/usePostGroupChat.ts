@@ -12,7 +12,7 @@ export const usePostGroupChat = () => {
     mutationFn: createGroupChat,
     onSuccess: () => {},
     onError: (err) => {
-      console.log('채팅방 수정 오류: ', err);
+      console.log('채팅방 참여 오류: ', err);
     },
   });
 };

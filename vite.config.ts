@@ -20,4 +20,7 @@ export default defineConfig({
     mkcert(),
     svgr(),
   ],
+  define: {
+    global: 'window',
+  },
 });

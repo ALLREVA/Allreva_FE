@@ -6,7 +6,9 @@ import ChatInput from './components/ChatInput';
 import Message from './components/Message';
 
 import { useIntersectionObserver } from 'hooks';
+import useWebSocket from 'hooks/useWebSocket';
 import { useGetInitSingleChat, useGetUnreadSingleChat, useGetReadSingleChat } from 'queries/chat';
+import type { MessageContent } from 'types';
 
 const ContentContainer = styled.div`
   display: flex;
@@ -26,6 +28,7 @@ const PrivateChatRoom = () => {
   const { id = '' } = useParams();
   const [isInitScrollSet, setIsInitScrollSet] = useState(false);
   const [myId, setMyId] = useState<number | null>(null);
+  const { socket, messages } = useWebSocket(id, 'single');
   const messageRefs = useRef<Map<number, HTMLDivElement | null>>(new Map());
 
   const { data: initChatMessages } = useGetInitSingleChat(parseInt(id));
@@ -75,6 +78,18 @@ const PrivateChatRoom = () => {
     setMyId(initChatMessages.myId);
   }, [setMyId, initChatMessages, isInitScrollSet]);
 
+  const handleSendMessage = (content: MessageContent) => {
+    if (socket && socket.connected) {
+      socket.publish({
+        destination: `/chat/single/connection/${id}`,
+        body: JSON.stringify(content),
+      });
+      console.log('chat:', content);
+    } else {
+      console.error('WebSocket is not connected.');
+    }
+  };
+
   return (
     <ContentContainer>
       <ChatContent>
@@ -95,7 +110,7 @@ const PrivateChatRoom = () => {
           .map((message) => <Message key={message.messageNumber} message={message} myId={myId} />)}
         <div ref={isInitScrollSet ? unreadTargetRef : undefined} />
       </ChatContent>
-      <ChatInput />
+      <ChatInput onSendMessage={handleSendMessage} />
     </ContentContainer>
   );
 };

@@ -5,8 +5,12 @@ import { useParams } from 'react-router-dom';
 import ChatInput from './components/ChatInput';
 import Message from './components/Message';
 
+import { endPoint } from 'constants/endPoint';
 import { useIntersectionObserver } from 'hooks';
+import useWebSocket from 'hooks/useWebSocket';
 import { useGetInitGroupChat, useGetReadGroupChat, useGetUnreadGroupChat } from 'queries/chat';
+import type { MessageContent } from 'types';
+import { tokenAxios } from 'utils';
 
 const ContentContainer = styled.div`
   display: flex;
@@ -26,6 +30,7 @@ const GroupChatRoom = () => {
   const { id = '' } = useParams();
   const [isInitScrollSet, setIsInitScrollSet] = useState(false);
   const [myId, setMyId] = useState<number | null>(null);
+  const { socket, messages } = useWebSocket(id, 'group');
   const messageRefs = useRef<Map<number, HTMLDivElement | null>>(new Map());
 
   const { data: initChatMessages } = useGetInitGroupChat(parseInt(id));
@@ -75,6 +80,18 @@ const GroupChatRoom = () => {
     setMyId(initChatMessages.myId);
   }, [setMyId, initChatMessages, isInitScrollSet]);
 
+  const handleSendMessage = (content: MessageContent) => {
+    if (socket && socket.connected) {
+      socket.publish({
+        destination: `/chat/group/connection/${id}`,
+        body: JSON.stringify(content),
+      });
+      console.log('chat:', content);
+    } else {
+      console.error('WebSocket is not connected.');
+    }
+  };
+
   return (
     <ContentContainer>
       <ChatContent>
@@ -93,9 +110,13 @@ const GroupChatRoom = () => {
         {unreadMessages?.pages
           .flat()
           .map((message) => <Message key={message.messageNumber} message={message} myId={myId} />)}
+
+        {messages.map((message, idx) => (
+          <p>{message}</p>
+        ))}
         <div ref={isInitScrollSet ? unreadTargetRef : undefined} />
       </ChatContent>
-      <ChatInput />
+      <ChatInput onSendMessage={handleSendMessage} />
     </ContentContainer>
   );
 };
