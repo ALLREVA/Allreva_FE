@@ -39,8 +39,10 @@ const FilledStyle = ({ color, theme }: BaseButtonColor & { theme: Theme }) => cs
   background-color: ${color === 'primary' ? theme.colors.primary : theme.colors.dark[500]};
   color: ${theme.colors.white};
 
-  &:active {
+  &:active,
+  &:hover {
     background-color: ${color === 'primary' ? theme.colors.primaryDark : theme.colors.dark[700]};
+    transition: none;
   }
 
   &:disabled {
@@ -54,9 +56,11 @@ const OutlineStyle = ({ color, theme }: BaseButtonColor & { theme: Theme }) => c
   background-color: transparent;
   color: ${color === 'primary' ? theme.colors.primary : theme.colors.dark[300]};
 
-  &:active {
+  &:active,
+  &:hover {
     border-color: ${color === 'primary' ? theme.colors.primaryDark : theme.colors.dark[300]};
     color: ${color === 'primary' ? theme.colors.primaryDark : theme.colors.dark[200]};
+    transition: none;
   }
 
   &:disabled {

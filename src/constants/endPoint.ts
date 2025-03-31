@@ -81,4 +81,29 @@ export const endPoint = {
   // Presigned API
   UPDATE_PRESIGNED_URL: '/file/presigned-url',
   DELETE_PRESIGNED_URL: '/file/presigned-url',
+
+  // Chat API
+  GET_GROUP_CHAT_INVITCODE: (groupChatId: number) => `/chat/group/invitation/${groupChatId}`,
+  GET_GROUP_CHAT_INFO: (groupChatId: number) => `/chat/group/${groupChatId}`,
+  GET_JOIN_GROUP_CHAT: (uuid: string) => `/chat/group/join/${uuid}`,
+  CREATE_GROUP_CHAT: '/chat/group/join',
+  UPDATE_GROUP_CHAT: '/chat/group',
+  DELETE_GROUP_CHAT: '/chat/group',
+  LEAVE_GROUP_CHAT: '/chat/group/leave',
+  GET_GROUP_CHAT_INIT_MESSAGES: '/message/group/enter',
+  GET_GROUP_CHAT_READ_MESSAGES: '/message/group/read',
+  GET_GROUP_CHAT_UNREAD_MESSAGES: '/message/group/unread',
+
+  GET_SINGLE_CHAT_INFO: (singleChatId: number) => `/chat/single/${singleChatId}`,
+  CREATE_SINGLE_CHAT: '/chat/single',
+  LEAVE_SINGLE_CHAT: '/chat/single',
+  GET_SINGLE_CHAT_INIT_MESSAGES: '/message/single/enter',
+  GET_SINGLE_CHAT_READ_MESSAGES: '/message/single/read',
+  GET_SINGLE_CHAT_UNREAD_MESSAGES: '/message/single/unread',
+
+  GET_CHAT_LIST: '/chat/list',
+  CHAT_SSE: `/chat/stream`,
+
+  GROUP_CHAT_WS: (groupChatId: string) => `/group/connection/${groupChatId}`,
+  SINGLE_CHAT_WS: (singleChatId: string) => `/single/connection/${singleChatId}`,
 };

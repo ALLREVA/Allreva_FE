@@ -4,6 +4,7 @@ import { createBrowserRouter, Outlet } from 'react-router-dom';
 import ModalRenderer from 'components/modalRenderer/ModalRenderer';
 import ToastRenderer from 'components/toast/ToastRenderer';
 import { FullLayout, TitleHeaderLayout } from 'layout';
+import { ChatRoomLayout } from 'layout/ChatRoomLayout';
 import { AuthHeaderLayout, AuthTitleHeaderLayout, PublicOnlyLayout } from 'layout/ProtectedRoutes';
 import SearchLayout from 'layout/SearchLayout';
 import Callback from 'pages/callback/Callback';
@@ -41,6 +42,12 @@ const CreateConcertRecord = lazy(() => import('pages/createConcertRecord/CreateC
 const CreateSeatReview = lazy(
   () => import('pages/createConcertHallReview/CreateConcertHallReview')
 );
+
+const Chat = lazy(() => import('pages/chat/Chat'));
+const JoinChat = lazy(() => import('pages/joinChat/JoinChat'));
+const PrivateChatRoom = lazy(() => import('pages/chatRoom/PrivateChatRoom'));
+const GroupChatRoom = lazy(() => import('pages/chatRoom/GroupChatRoom'));
+const EditChat = lazy(() => import('pages/editChat/EditChat'));
 
 const routes = [
   {
@@ -128,7 +135,10 @@ const routes = [
 
       {
         element: <AuthHeaderLayout />,
-        children: [{ path: '/mypage', element: <MyPage /> }],
+        children: [
+          { path: '/mypage', element: <MyPage /> },
+          { path: '/chat', element: <Chat /> },
+        ],
       },
 
       {
@@ -230,6 +240,24 @@ const routes = [
             path: '/mypage/seat-review/edit/:reviewId',
             element: <CreateSeatReview isFromMypage type="edit" />,
             handle: { title: '좌석 리뷰 수정' },
+          },
+          { path: '/chat/:id/join', element: <JoinChat />, handle: { title: '채팅 참여' } },
+          { path: '/chat/group/:id/edit', element: <EditChat />, handle: { title: '채팅방 수정' } },
+        ],
+      },
+
+      {
+        element: <ChatRoomLayout />,
+        children: [
+          {
+            path: '/chat/private/:id',
+            element: <PrivateChatRoom />,
+            handle: { chatType: 'SINGLE' },
+          },
+          {
+            path: '/chat/group/:id',
+            element: <GroupChatRoom />,
+            handle: { chatType: 'GROUP' },
           },
         ],
       },

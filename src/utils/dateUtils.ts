@@ -79,3 +79,23 @@ export const formatDotDate = (dateString: string) => {
 export const formatFromNowDate = (date: string) => {
   return dayjs(date).fromNow();
 };
+
+// custom date
+export const formatCustomTime = (dateString: string) => {
+  const today = dayjs();
+  const date = dayjs(dateString);
+
+  if (today.year() !== date.year()) return `${date.format('YYYY.MM.DD')}`;
+
+  if (today.isSame(date, 'day')) return date.format('HH:mm');
+
+  if (today.subtract(1, 'd').format('YYYY-MM-DD') === date.format('YYYY-MM-DD')) return '어제';
+  if (today.subtract(2, 'd').format('YYYY-MM-DD') === date.format('YYYY-MM-DD')) return '그저께';
+
+  return `${date.get('M') + 1}월 ${date.get('D')}일`;
+};
+
+// format time
+export const formatTime = (time: string) => {
+  return dayjs(time).format('HH:mm');
+};

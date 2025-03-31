@@ -12,6 +12,7 @@ const ToastItem = styled(motion.div)`
   bottom: 10%;
   left: 50%;
   z-index: 2000;
+  max-width: 36rem;
   padding: 1.2rem 2rem;
   border-radius: 24px;
   background-color: ${({ theme }) => theme.colors.dark[800]};
